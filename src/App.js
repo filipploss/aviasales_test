@@ -7,12 +7,19 @@ import "./App.css";
 import Filter from "./components/Filter";
 
 const theme = createMuiTheme({
+  overrides: {
+    MuiTypography: {
+      body1: {
+        fontSize: "13px",
+        fontWeight: "normal",
+        lineHeight: "20px",
+      },
+    },
+  },
   typography: {
     fontFamily: "Open Sans",
-    fontStyle: "normal",
-    fontWeight: 600,
-    fontSize: "12px",
-    lineHeight: "12px",
+    // fontStyle: "normal",
+    // fontWeight: "normal",
   },
 });
 

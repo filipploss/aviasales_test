@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@material-ui/core/Box";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { ReactComponent as Logo } from "http://pics.avs.io/110/36/S7.png";
+// import { ReactComponent as Logo } from "http://pics.avs.io/110/36/S7.png";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +34,7 @@ export default function Ticket() {
     <Box className={classes.card}>
       <Box className={classes.header}>
         <Box>{price.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, "$1 ")} Р</Box>
-        {/* <Box><img src="http://pics.avs.io/110/36/S7.png" alt=''> </img></Box> */}
+        <Box><img src="http://pics.avs.io/110/36/S7.png" alt=''/></Box>
       </Box>
       <Box className={classes.destination}>
         <Box>13400 Р</Box>

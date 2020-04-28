@@ -1,11 +1,14 @@
 import React from "react";
-// import clsx from "clsx";
-import Checkbox from "@material-ui/core/Checkbox";
+import Box from '@material-ui/core/Box';
 import { makeStyles } from "@material-ui/core/styles";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import clsx from "clsx";
+import Checkbox from "@material-ui/core/Checkbox";
+
+
 // import FormHelperText from "@material-ui/core/FormHelperText";
 
 // import "./Filter.css";
@@ -181,7 +184,7 @@ export default function Filter() {
   //   const error = [gilad, jason, antoine].filter((v) => v).length !== 2;
 
   return (
-    <div className={classes.filter}>
+    <Box className={classes.filter}>
       <FormControl className={classes.formControl}>
         <FormLabel
           component="legend"
@@ -196,12 +199,11 @@ export default function Filter() {
             control={
               <Checkbox
                 checked={all}
-                disableRipple
                 onChange={handleChangeAll}
                 name="all"
                 checkedIcon={<span className={classes.checkedIcon} />}
                 icon={<span className={classes.icon} />}
-                // className={classes.root}
+                disableRipple	
               />
             }
             label="Все"
@@ -215,6 +217,7 @@ export default function Filter() {
                 name="nonStop"
                 checkedIcon={<span className={classes.checkedIcon} />}
                 icon={<span className={classes.icon} />}
+                disableRipple	
               />
             }
             label="Без пересадок"
@@ -228,6 +231,7 @@ export default function Filter() {
                 name="oneStop"
                 checkedIcon={<span className={classes.checkedIcon} />}
                 icon={<span className={classes.icon} />}
+                disableRipple	
               />
             }
             label="1 пересадка"
@@ -241,6 +245,7 @@ export default function Filter() {
                 name="twoStops"
                 checkedIcon={<span className={classes.checkedIcon} />}
                 icon={<span className={classes.icon} />}
+                disableRipple	
               />
             }
             label="2 пересадки"
@@ -254,6 +259,7 @@ export default function Filter() {
                 name="threeStops"
                 checkedIcon={<span className={classes.checkedIcon} />}
                 icon={<span className={classes.icon} />}
+                disableRipple	
               />
             }
             label="3 пересадки"
@@ -261,6 +267,6 @@ export default function Filter() {
         </FormGroup>
         {/* <FormHelperText>Be careful</FormHelperText> */}
       </FormControl>
-    </div>
+    </Box>
   );
 }

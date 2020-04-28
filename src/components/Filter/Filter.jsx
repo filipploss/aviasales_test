@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "5px",
     width: "232px",
     minHeight: "252px",
+    cursor: 'url("./images/cursor.svg"), auto'
     // "&:hover": {
     //     backgroundColor: "transparent !important",
     //   },

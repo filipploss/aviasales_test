@@ -1,11 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
-// // or
-// import { Checkbox } from '@material-ui/core';
 
 import { ReactComponent as Logo } from "./images/plane.svg";
 import "./App.css";
@@ -25,8 +23,6 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: "Open Sans",
-    // fontStyle: "normal",
-    // fontWeight: "normal",
   },
 });
 
@@ -40,6 +36,42 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
+
+  useEffect(() => {
+    let cheapest;
+    let fastest;
+    const fetchSearchId = async () => {
+      try {
+        let response = await fetch(
+          "https://front-test.beta.aviasales.ru/search"
+        );
+        let searchId = await response.json();
+        console.log(searchId.searchId);
+        return searchId.searchId;
+      } catch (err) {
+        alert('Что-то пошло не так :( Перезагрузите страницу'); // TypeError: failed to fetch
+      }
+      // TODO: error обработка
+    };
+
+    const fetchTickets = async (searchId) => {
+      try {
+        let response = await fetch(
+          `https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`
+        );
+        // TODO: error обработка
+        // TODO: обработать завершение поиска!
+        console.log(response);
+        let tickets = await response.json();
+        console.log(tickets);
+      } catch (err) {
+        alert('Что-то пошло не так :( Перезагрузите страницу'); // TypeError: failed to fetch
+      }
+    };
+
+    fetchSearchId().then((res) => fetchTickets(res));
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="md">
@@ -49,8 +81,8 @@ function App() {
         <Box display="flex">
           <Filter />
           <Box>
-          <Tabs />
-          <Ticket/>
+            <Tabs />
+            <Ticket />
           </Box>
         </Box>
       </Container>

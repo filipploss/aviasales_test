@@ -182,7 +182,7 @@ export default function Filter() {
 
   const { all, nonStop, oneStop, twoStops, threeStops } = state;
   //   const error = [gilad, jason, antoine].filter((v) => v).length !== 2;
-
+  console.log('Filter loaded')
   return (
     <Box className={classes.filter}>
       <FormControl className={classes.formControl}>

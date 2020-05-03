@@ -80,10 +80,10 @@ export default function Filter() {
   const classes = useStyles();
   const [state, setState] = React.useState({
     all: true,
-    nonStop: false,
-    oneStop: false,
-    twoStops: false,
-    threeStops: false,
+    nonStop: true,
+    oneStop: true,
+    twoStops: true,
+    threeStops: true,
   });
 
   const handleChange = (event) => {
@@ -100,7 +100,27 @@ export default function Filter() {
         all: false,
         [event.target.name]: event.target.checked,
       });
-    } else if (
+    } 
+
+// TODO: когда все выделены, выделять ALL
+
+    // else if (
+    //   !state.all &&
+    //   state.nonStop &&
+    //   oneStop &&
+    //   twoStops &&
+    //   threeStops &&
+    //   event.target.name !== "all"
+    // ) {
+    //   setState({
+    //     ...state,
+    //     all: true,
+    //     [event.target.name]: event.target.checked,
+    //   });
+    // }
+    
+    
+    else if (
       state.all &&
       !state.nonStop &&
       !oneStop &&
@@ -130,10 +150,10 @@ export default function Filter() {
     } else {
       setState({
         all: true,
-        nonStop: false,
-        oneStop: false,
-        twoStops: false,
-        threeStops: false,
+        nonStop: true,
+        oneStop: true,
+        twoStops: true,
+        threeStops: true,
       });
     }
   };

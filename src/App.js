@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
@@ -44,7 +44,7 @@ function App(props) {
 
   useEffect(() => {
     // let ticketsData;
-    console.log('App loaded')
+    console.log("App loaded");
     const fetchSearchId = async () => {
       try {
         let response = await fetch(
@@ -80,27 +80,38 @@ function App(props) {
       .then((res) => fetchTickets(res))
       .then((res) => {
         // console.log(props.data)
-      //  console.log(res.tickets)
-         dispatch(fetchData(res))}
-      );
+        //   console.log('!')
+        //  console.log(res)
+
+        //  console.log(res.tickets.sort((a, b) => a.price > b.price ? 1 : -1))
+        dispatch(
+          fetchData({
+            tickets: res.tickets.sort((a, b) => (a.price > b.price ? 1 : -1)),
+          })
+        );
+      });
   });
 
   return (
     // <ContextApp.Provider value={{ dispatch, state }}>
-      <ThemeProvider theme={theme}>
-        <Container maxWidth="md">
-          <Box className={classes.logo}>
-            <Logo />
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="md">
+        <Box className={classes.logo}>
+          <Logo />
+        </Box>
+        <Box display="flex">
+          <Filter />
+          <Box>
+            <Tabs />
+            <TicketCard number={0} />
+            <TicketCard number={1} />
+            <TicketCard number={2} />
+            <TicketCard number={3} />
+            <TicketCard number={4} />
           </Box>
-          <Box display="flex">
-            <Filter />
-            <Box>
-              <Tabs />
-              <TicketCard />
-            </Box>
-          </Box>
-        </Container>
-      </ThemeProvider>
+        </Box>
+      </Container>
+    </ThemeProvider>
     // </ContextApp.Provider>
   );
 }

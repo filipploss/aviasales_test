@@ -10,6 +10,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 data : action.payload,
                 filteredData: action.payload
+                // filteredData: action.payload.tickets.price.sort()
             };
         case 'cheapest':
             return {

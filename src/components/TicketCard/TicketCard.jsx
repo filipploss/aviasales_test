@@ -83,21 +83,21 @@ function TicketCard(props) {
 
   if (props.data.tickets) {
     //  TODO!!!! Departute and arrival time is made for Moscow
-    price = props.data.tickets[0].price
+    price = props.data.tickets[props.number].price
       .toString()
       .replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, "$1 ");
-    carrierImageUrl = `http://pics.avs.io/110/36/${props.data.tickets[0].carrier}.png`;
-    console.log("date data: ", props.data.tickets[0].segments[0].date);
+    carrierImageUrl = `http://pics.avs.io/110/36/${props.data.tickets[props.number].carrier}.png`;
+    // console.log("date data: ", props.data.tickets[0].segments[0].date);
 
-    firstSegmentOrigin = props.data.tickets[0].segments[0].origin;
-    firstSegmentDestination = props.data.tickets[0].segments[0].destination;
+    firstSegmentOrigin = props.data.tickets[props.number].segments[0].origin;
+    firstSegmentDestination = props.data.tickets[props.number].segments[0].destination;
 
-    secondSegmentOrigin = props.data.tickets[0].segments[1].origin;
-    secondSegmentDestination = props.data.tickets[0].segments[1].destination;
+    secondSegmentOrigin = props.data.tickets[props.number].segments[1].origin;
+    secondSegmentDestination = props.data.tickets[props.number].segments[1].destination;
     firstSegmentDepartureDateAndTime = new Date(
-      props.data.tickets[0].segments[0].date
+      props.data.tickets[props.number].segments[0].date
     );
-    console.log("departureDateAndTime: ", firstSegmentDepartureDateAndTime);
+    // console.log("departureDateAndTime: ", firstSegmentDepartureDateAndTime);
     firstSegmentDepartureHours = String(
       firstSegmentDepartureDateAndTime.getHours()
     ).padStart(2, "0");
@@ -106,15 +106,15 @@ function TicketCard(props) {
     ).padStart(2, "0");
 
     firstSegmentdepartureTime = firstSegmentDepartureDateAndTime.getTime();
-    console.log("departureTime: ", firstSegmentdepartureTime);
-    console.log("duration: ", props.data.tickets[0].segments[0].duration);
+    // console.log("departureTime: ", firstSegmentdepartureTime);
+    // console.log("duration: ", props.data.tickets[0].segments[0].duration);
     firstSegmentdepartureTimestamp = new Date(
       firstSegmentdepartureTime +
-        props.data.tickets[0].segments[0].duration * 60000
+        props.data.tickets[props.number].segments[0].duration * 60000
     );
-    console.log("timestamp + duration: ", firstSegmentdepartureTimestamp);
-    console.log(firstSegmentdepartureTimestamp.getHours());
-    console.log(firstSegmentdepartureTimestamp.getMinutes());
+    // console.log("timestamp + duration: ", firstSegmentdepartureTimestamp);
+    // console.log(firstSegmentdepartureTimestamp.getHours());
+    // console.log(firstSegmentdepartureTimestamp.getMinutes());
 
     firstSegmentArrivalHours = String(
       firstSegmentdepartureTimestamp.getHours()
@@ -129,25 +129,26 @@ function TicketCard(props) {
     ).padStart(2, "0");
 
     firstSegmentTravelMinutes = String(
-      props.data.tickets[0].segments[0].duration -
-        Math.floor(props.data.tickets[0].segments[0].duration / 60) * 60
+      props.data.tickets[props.number].segments[0].duration -
+        Math.floor(props.data.tickets[props.number].segments[0].duration / 60) * 60
     ).padStart(2, "0");
 
     firstSegmentStops =
-      props.data.tickets[0].segments[0].stops.length === 0
+      props.data.tickets[props.number].segments[0].stops.length === 0
         ? "БЕЗ ПЕРЕСАДОК"
-        : props.data.tickets[0].segments[0].stops.length === 1
+        : props.data.tickets[props.number].segments[0].stops.length === 1
         ? "1 ПЕРЕСАДКА"
-        : props.data.tickets[0].segments[0].stops.length > 1
-        ? `${props.data.tickets[0].segments[0].stops.length} ПЕРЕСАДКИ`
+        : props.data.tickets[props.number].segments[0].stops.length > 1
+        ? `${props.data.tickets[props.number].segments[0].stops.length} ПЕРЕСАДКИ`
         : "5 ПЕРЕСАДОК";
 
-      firstSegmentStopsNames = props.data.tickets[0].segments[0].stops.length > 1
-      ? props.data.tickets[0].segments[0].stops.join(", ")
-      : props.data.tickets[0].segments[0].stops.join("")
+    firstSegmentStopsNames =
+      props.data.tickets[props.number].segments[0].stops.length > 1
+        ? props.data.tickets[props.number].segments[0].stops.join(", ")
+        : props.data.tickets[props.number].segments[0].stops.join("");
 
     secondSegmentDepartureDateAndTime = new Date(
-      props.data.tickets[0].segments[1].date
+      props.data.tickets[props.number].segments[1].date
     );
 
     secondSegmentDepartureHours = String(
@@ -158,15 +159,15 @@ function TicketCard(props) {
       secondSegmentDepartureDateAndTime.getMinutes()
     ).padStart(2, "0");
     secondSegmentdepartureTime = secondSegmentDepartureDateAndTime.getTime();
-    console.log("departureTime: ", secondSegmentdepartureTime);
-    console.log("duration: ", props.data.tickets[0].segments[1].duration);
+    // console.log("departureTime: ", secondSegmentdepartureTime);
+    // console.log("duration: ", props.data.tickets[0].segments[1].duration);
     secondSegmentdepartureTimestamp = new Date(
       secondSegmentdepartureTime +
-        props.data.tickets[0].segments[1].duration * 60000
+        props.data.tickets[props.number].segments[1].duration * 60000
     );
-    console.log("timestamp + duration: ", secondSegmentdepartureTimestamp);
-    console.log(secondSegmentdepartureTimestamp.getHours());
-    console.log(secondSegmentdepartureTimestamp.getMinutes());
+    // console.log("timestamp + duration: ", secondSegmentdepartureTimestamp);
+    // console.log(secondSegmentdepartureTimestamp.getHours());
+    // console.log(secondSegmentdepartureTimestamp.getMinutes());
     secondSegmentArrivalHours = String(
       secondSegmentdepartureTimestamp.getHours()
     ).padStart(2, "0");
@@ -175,32 +176,33 @@ function TicketCard(props) {
     ).padStart(2, "0");
 
     secondSegmentTravelHours = String(
-      Math.floor(props.data.tickets[0].segments[1].duration / 60)
+      Math.floor(props.data.tickets[props.number].segments[1].duration / 60)
     ).padStart(2, "0");
 
     secondSegmentTravelMinutes = String(
-      props.data.tickets[0].segments[1].duration -
-        Math.floor(props.data.tickets[0].segments[1].duration / 60) * 60
+      props.data.tickets[props.number].segments[1].duration -
+        Math.floor(props.data.tickets[props.number].segments[1].duration / 60) * 60
     ).padStart(2, "0");
 
     secondSegmentStops =
-      props.data.tickets[0].segments[1].stops.length === 0
+      props.data.tickets[props.number].segments[1].stops.length === 0
         ? "БЕЗ ПЕРЕСАДОК"
-        : props.data.tickets[0].segments[1].stops.length === 1
+        : props.data.tickets[props.number].segments[1].stops.length === 1
         ? "1 ПЕРЕСАДКА"
-        : props.data.tickets[0].segments[1].stops.length > 1
-        ? `${props.data.tickets[0].segments[1].stops.length} ПЕРЕСАДКИ`
+        : props.data.tickets[props.number].segments[1].stops.length > 1
+        ? `${props.data.tickets[props.number].segments[1].stops.length} ПЕРЕСАДКИ`
         : "5 ПЕРЕСАДОК";
 
-        secondSegmentStopsNames = props.data.tickets[0].segments[1].stops.length > 1
-      ? props.data.tickets[0].segments[1].stops.join(", ")
-      : props.data.tickets[0].segments[1].stops.join("")
+    secondSegmentStopsNames =
+      props.data.tickets[props.number].segments[1].stops.length > 1
+        ? props.data.tickets[props.number].segments[1].stops.join(", ")
+        : props.data.tickets[props.number].segments[1].stops.join("");
   }
   return (
     <>
       {props.data.tickets ? (
         <Box className={classes.card}>
-          {console.log(props.data)}
+          {console.log(props.filteredData)}
           <Box className={classes.header}>
             <Box>{price} Р</Box>
             <Box>
@@ -210,7 +212,7 @@ function TicketCard(props) {
           <Box className={classes.destination}>
             <Box>
               <Box className={classes.destinationHeading}>
-                {firstSegmentOrigin} –{firstSegmentDestination}
+                {firstSegmentOrigin} – {firstSegmentDestination}
               </Box>
               <Box className={classes.destinationText}>
                 {firstSegmentDepartureHours}:{firstSegmentdepartureMinutes} –{" "}
@@ -235,7 +237,7 @@ function TicketCard(props) {
           <Box className={classes.destination}>
             <Box>
               <Box className={classes.destinationHeading}>
-                {secondSegmentOrigin} –{secondSegmentDestination}
+                {secondSegmentOrigin} – {secondSegmentDestination}
               </Box>
               <Box className={classes.destinationText}>
                 {secondSegmentDepartureHours}:{secondSegmentDepartureMinutes} –{" "}

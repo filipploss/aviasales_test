@@ -5,7 +5,7 @@ const fetchData = (payload) => ({ type: "FETCH_DATA", payload });
 //   payload,
 // });
 
-// const favButtonSelect = (payload) => ({
+// const favButtonSelect = (payload) => ({f
 //   type: "FAV_BUTTON_SELECT",
 //   payload,
 // });

@@ -1,5 +1,7 @@
 const fetchData = (payload) => ({ type: "FETCH_DATA", payload });
 
+const filterData = (payload) => ({ type: "FILTER_DATA", payload });
+
 // const changeVolumeSelect = (payload) => ({
 //   type: "CHANGE_VOLUME_SELECT",
 //   payload,
@@ -15,4 +17,4 @@ const fetchData = (payload) => ({ type: "FETCH_DATA", payload });
 //   payload,
 // });
 
-export { fetchData };
+export { fetchData, filterData };

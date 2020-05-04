@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -7,10 +8,11 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
+import { filterData } from "../../actions";
+import { dispatch } from "../../index.js";
 import CheckboxTick from "../../images/Shape.svg";
 
 const useStyles = makeStyles((theme) => ({
-
   legend: {
     marginBottom: "10px",
     fontStyle: "normal",
@@ -34,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     width: "232px",
     minHeight: "252px",
     cursor: 'url("./images/cursor.svg"), auto',
-   
   },
   icon: {
     borderRadius: "2px",
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Filter() {
+function Filter(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     all: true,
@@ -90,9 +91,9 @@ export default function Filter() {
     if (
       state.all &&
       state.nonStop &&
-      oneStop &&
-      twoStops &&
-      threeStops &&
+      state.oneStop &&
+      state.twoStops &&
+      state.threeStops &&
       event.target.name !== "all"
     ) {
       setState({
@@ -100,9 +101,9 @@ export default function Filter() {
         all: false,
         [event.target.name]: event.target.checked,
       });
-    } 
+    }
 
-// TODO: когда все выделены, выделять ALL
+    // TODO: когда все выделены, выделять ALL
 
     // else if (
     //   !state.all &&
@@ -118,22 +119,62 @@ export default function Filter() {
     //     [event.target.name]: event.target.checked,
     //   });
     // }
-    
-    
     else if (
-      state.all &&
+      !state.all &&
       !state.nonStop &&
-      !oneStop &&
-      !twoStops &&
-      !threeStops &&
-      event.target.name !== "all"
+      !state.oneStop &&
+      !state.twoStops &&
+      !state.threeStops &&
+      (event.target.name !== "all" || event.target.name === "nonStop")
     ) {
+      // console.log(event.target.name);
+      // if (event.target.name === "nonStop" && !state.nonStop) {
+      // console.log('state before: ', state)
       setState({
         ...state,
         all: false,
+        nonStop: true,
         [event.target.name]: event.target.checked,
       });
-    } else {
+
+      let results = props.data.tickets.filter(
+        (item) =>
+          item.segments[0].stops.length === 0 &&
+          item.segments[1].stops.length === 0
+      );
+      console.log("!", results);
+      // console.log('state after: ', state)
+      dispatch(
+        filterData({
+          tickets: results,
+        })
+      );
+    } else if (event.target.name === "nonStop" && state.nonStop) {
+      setState({
+        ...state,
+        nonStop: false,
+        [event.target.name]: event.target.checked,
+      });
+      let results = props.data.tickets;
+      console.log("!", results);
+      dispatch(
+        filterData({
+          tickets: results,
+        })
+      );
+    }
+
+    // }
+
+    // else  {
+    //   dispatch(
+    //     filterData({
+    //       tickets: props.data.tickets,
+    //     })
+    //   );
+    // }
+    // }
+    else {
       setState({ ...state, [event.target.name]: event.target.checked });
     }
   };
@@ -246,3 +287,12 @@ export default function Filter() {
     </Box>
   );
 }
+
+const mapStateToProps = ({ data, filteredData }) => {
+  return {
+    data,
+    filteredData,
+  };
+};
+
+export default connect(mapStateToProps)(Filter);

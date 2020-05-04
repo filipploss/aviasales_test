@@ -23,12 +23,13 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "20px",
     letterSpacing: "0.5px",
     overflow: "hidden",
+    
 
     // backgroundColor: '#2196F3',
   },
   tab: {
     // boxSizing: 'content-box',
-
+    // cursor: 'url("../../images/cursor.svg"), auto',
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -67,7 +68,7 @@ function Tabs(props) {
               setSelected("fastest");
               dispatch(
                 fetchData({
-                  tickets: props.data.tickets.sort((a, b) =>
+                  tickets: props.filteredData.tickets.sort((a, b) =>
                     a.segments[0].duration + a.segments[1].duration >
                     b.segments[0].duration + b.segments[1].duration
                       ? 1
@@ -88,7 +89,7 @@ function Tabs(props) {
               setSelected("cheapest");
               dispatch(
                 fetchData({
-                  tickets: props.data.tickets.sort((a, b) =>
+                  tickets: props.filteredData.tickets.sort((a, b) =>
                     a.price > b.price ? 1 : -1
                   ),
                 })

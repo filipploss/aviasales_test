@@ -93,7 +93,6 @@ function App(props) {
   });
 
   return (
-    // <ContextApp.Provider value={{ dispatch, state }}>
     <ThemeProvider theme={theme}>
       <Container maxWidth="md">
         <Box className={classes.logo}>
@@ -112,7 +111,7 @@ function App(props) {
         </Box>
       </Container>
     </ThemeProvider>
-    // </ContextApp.Provider>
+
   );
 }
 

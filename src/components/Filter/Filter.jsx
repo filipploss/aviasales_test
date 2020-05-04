@@ -124,8 +124,9 @@ function Filter(props) {
       !state.nonStop &&
       !state.oneStop &&
       !state.twoStops &&
-      !state.threeStops &&
-      (event.target.name !== "all" || event.target.name === "nonStop")
+      !state.threeStops
+      // &&
+      // (event.target.name !== "all" || event.target.name === "nonStop")
     ) {
       // console.log(event.target.name);
       // if (event.target.name === "nonStop" && !state.nonStop) {
@@ -133,26 +134,99 @@ function Filter(props) {
       setState({
         ...state,
         all: false,
-        nonStop: true,
+        // nonStop: true,
         [event.target.name]: event.target.checked,
       });
+      let results;
 
-      let results = props.data.tickets.filter(
-        (item) =>
-          item.segments[0].stops.length === 0 &&
-          item.segments[1].stops.length === 0
-      );
-      console.log("!", results);
+      switch (event.target.name) {
+        case "nonStop":
+          results = props.data.tickets.filter(
+            (item) =>
+              item.segments[0].stops.length === 0 &&
+              item.segments[1].stops.length === 0
+          );
+          dispatch(
+            filterData({
+              tickets: results,
+            })
+          );
+          break;
+        case "oneStop":
+          results = props.data.tickets.filter(
+            (item) =>
+              item.segments[0].stops.length === 1 &&
+              item.segments[1].stops.length === 1
+          );
+          dispatch(
+            filterData({
+              tickets: results,
+            })
+          );
+          break;
+        case "twoStops":
+          results = props.data.tickets.filter(
+            (item) =>
+              item.segments[0].stops.length === 2 &&
+              item.segments[1].stops.length === 2
+          );
+          dispatch(
+            filterData({
+              tickets: results,
+            })
+          );
+          break;
+        case "threeStops":
+          results = props.data.tickets.filter(
+            (item) =>
+              item.segments[0].stops.length === 3 &&
+              item.segments[1].stops.length === 3
+          );
+          dispatch(
+            filterData({
+              tickets: results,
+            })
+          );
+          break;
+        default:
+          break;
+      }
+
+      // if (event.target.name === "nonStop") {
+      //   results = props.data.tickets.filter(
+      //     (item) =>
+      //       item.segments[0].stops.length === 0 &&
+      //       item.segments[1].stops.length === 0
+      //   );
+      //   dispatch(
+      //     filterData({
+      //       tickets: results,
+      //     })
+      //   );
+      // } else if (event.target.name === "oneStop") {
+      //   results = props.data.tickets.filter(
+      //     (item) =>
+      //       item.segments[0].stops.length === 1 &&
+      //       item.segments[1].stops.length === 1
+      //   );
+      //   dispatch(
+      //     filterData({
+      //       tickets: results,
+      //     })
+      //   );
+      // }
+
+      // console.log("!", results);
       // console.log('state after: ', state)
-      dispatch(
-        filterData({
-          tickets: results,
-        })
-      );
-    } else if (event.target.name === "nonStop" && state.nonStop) {
+    } else if (
+      (event.target.name === "nonStop" && state.nonStop) ||
+      (event.target.name === "oneStop" && state.oneStop) ||
+      (event.target.name === "twoStops" && state.twoStops) ||
+      (event.target.name === "threeStops" && state.threeStops)
+    ) {
       setState({
         ...state,
-        nonStop: false,
+        // nonStop: false,
         [event.target.name]: event.target.checked,
       });
       let results = props.data.tickets;

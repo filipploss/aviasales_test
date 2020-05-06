@@ -96,12 +96,67 @@ function Filter(props) {
       state.threeStops &&
       event.target.name !== "all"
     ) {
-      setState({
-        ...state,
-        all: false,
-        [event.target.name]: event.target.checked,
+      let promise = new Promise(function (resolve, reject) {
+        setState({
+
+            ...state,
+            all: false,
+            [event.target.name]: event.target.checked,
+
+        },    
+        
+        
+        );
+        // resolve("done");
       });
+      promise.then((res) => {
+        console.log("state.nonStop: ", state.nonStop);
+        let results;
+        if (!state.nonStop) {
+          console.log("nonStop unselected");
+          results = props.data.tickets.filter(
+            (item) =>
+              item.segments[0].stops.length === 0 &&
+              item.segments[1].stops.length === 0
+          );
+          dispatch(
+            filterData({
+              tickets: results,
+            })
+          );
+        }
+      });
+
+      //  if (!state.oneStop) {
+      //   console.log('oneStop unselected')
+      //   results = props.data.tickets.filter(
+      //     (item) =>
+      //       item.segments[0].stops.length === 1 &&
+      //       item.segments[1].stops.length === 1
+      //   );
+      //   dispatch(
+      //     filterData({
+      //       tickets: results,
+      //     })
+      //   );
+      // }
     }
+
+    //   switch (state.nonStop) {
+    //     case false:
+    //       results = props.data.tickets.filter(
+    //         (item) =>
+    //           item.segments[0].stops.length === 0 &&
+    //           item.segments[1].stops.length === 0
+    //       );
+    //       dispatch(
+    //         filterData({
+    //           tickets: results,
+    //         })
+    //       );
+    //       break;
+
+    // }
 
     // TODO: когда все выделены, выделять ALL
 

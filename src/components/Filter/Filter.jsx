@@ -89,7 +89,6 @@ function Filter(props) {
 
   useEffect(() => {
     if (props.filteredData) {
-      console.log("!!!");
       let results = props.data.tickets;
 
       if (!state.nonStop) {
@@ -99,14 +98,7 @@ function Filter(props) {
             item.segments[0].stops.length !== 0 &&
             item.segments[1].stops.length !== 0
         );
-        // console.log('concat: ', results.concat(resultsArr))
-        // results = results.concat(resultsArr)
         console.log("results nonstop: ", results);
-        // dispatch(
-        //   filterData({
-        //     tickets: results,
-        //   })
-        // );
       }
       if (!state.oneStop) {
         console.log("oneStop unselected");
@@ -115,13 +107,6 @@ function Filter(props) {
             item.segments[0].stops.length !== 1 &&
             item.segments[1].stops.length !== 1
         );
-        // dispatch(
-        //   filterData({
-        //     tickets: results,
-        //   })
-        // );
-        // console.log('concat: ', results.concat(resultsArr))
-        // results = results.concat(resultsArr)
         console.log("results oneStop:", results);
       }
       if (!state.twoStops) {
@@ -131,8 +116,6 @@ function Filter(props) {
             item.segments[0].stops.length !== 2 &&
             item.segments[1].stops.length !== 2
         );
-        // console.log('concat: ', results.concat(resultsArr))
-        // results = results.concat(resultsArr)
         console.log("results twostops: ", results);
       }
 
@@ -143,71 +126,15 @@ function Filter(props) {
             item.segments[0].stops.length !== 3 &&
             item.segments[1].stops.length !== 3
         );
-        // console.log('concat: ', results.concat(resultsArr))
-        // results = results.concat(resultsArr)
         console.log("results threestops: ", results);
       }
-
 
       dispatch(
         filterData({
           tickets: results,
         })
       );
-      // if (!state.nonStop) {
-      //   console.log("nonStop unselected");
-      //   let resultsArr = props.data.tickets.filter(
-      //     (item) =>
-      //       (item.segments[0].stops.length !== 0 ) ||
-      //       item.segments[1].stops.length !== 0
-      //   );
-      //   console.log('concat: ', results.concat(resultsArr))
-      //   results = results.concat(resultsArr)
-      //   console.log("results: ", results);
-      // }
-      // if (!state.oneStop) {
-      //   console.log("oneStop unselected");
-      //   let resultsArr = props.data.tickets.filter(
-      //     (item) =>
-      //       item.segments[0].stops.length !== 1  ||
-      //       item.segments[1].stops.length !== 1
-      //   );
-      //   console.log('concat: ', results.concat(resultsArr))
-      //   results = results.concat(resultsArr)
-      //   console.log("results: ", results);
-      // }
-      // if (!state.twoStops) {
-      //   console.log("twoStops unselected");
-      //   let resultsArr = props.data.tickets.filter(
-      //     (item) =>
-      //       item.segments[0].stops.length !== 2  ||
-      //       item.segments[1].stops.length !== 2
-      //   );
-      //   console.log('concat: ', results.concat(resultsArr))
-      //   results = results.concat(resultsArr)
-      //   console.log("results: ", results);
-      // }
-
-      // if (!state.threeStops) {
-      //   console.log("threeStops unselected");
-      //   let resultsArr = props.data.tickets.filter(
-      //     (item) =>
-      //       item.segments[0].stops.length !== 3  ||
-      //       item.segments[1].stops.length !== 3
-      //   );
-      //   console.log('concat: ', results.concat(resultsArr))
-      //   results = results.concat(resultsArr)
-      //   console.log("results: ", results);
-      // }
-
-      // console.log(results.length);
-      // if (results.length > 0) {
-      //   dispatch(
-      //     filterData({
-      //       tickets: results,
-      //     })
-      //   );
-      // }
+    
     }
   }, [state]);
 
@@ -220,58 +147,23 @@ function Filter(props) {
       state.threeStops &&
       event.target.name !== "all"
     ) {
-      // let promise = new Promise(function (resolve, reject) {
       setState({
         ...state,
         all: false,
         [event.target.name]: event.target.checked,
       });
-
       console.log("state.nonStop: ", state.nonStop);
-
-      ////
-
-      // });
-
-      //  if (!state.oneStop) {
-      //   console.log('oneStop unselected')
-      //   results = props.data.tickets.filter(
-      //     (item) =>
-      //       item.segments[0].stops.length === 1 &&
-      //       item.segments[1].stops.length === 1
-      //   );
-      //   dispatch(
-      //     filterData({
-      //       tickets: results,
-      //     })
-      //   );
-      // }
     }
-
-    //   switch (state.nonStop) {
-    //     case false:
-    //       results = props.data.tickets.filter(
-    //         (item) =>
-    //           item.segments[0].stops.length === 0 &&
-    //           item.segments[1].stops.length === 0
-    //       );
-    //       dispatch(
-    //         filterData({
-    //           tickets: results,
-    //         })
-    //       );
-    //       break;
-
-    // }
 
     // TODO: когда все выделены, выделять ALL
 
     // else if (
     //   !state.all &&
     //   state.nonStop &&
-    //   oneStop &&
-    //   twoStops &&
-    //   threeStops &&
+    //   state.oneStop &&
+    //   state.twoStops &&
+    //   state.threeStops 
+    //   &&
     //   event.target.name !== "all"
     // ) {
     //   setState({
@@ -280,6 +172,8 @@ function Filter(props) {
     //     [event.target.name]: event.target.checked,
     //   });
     // }
+
+
     else if (
       !state.all &&
       !state.nonStop &&

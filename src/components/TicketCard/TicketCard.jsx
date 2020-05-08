@@ -13,13 +13,26 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Open Sans",
     fontStyle: "normal",
     fontWeight: 600,
+    padding: '20px',
+
   },
   header: {
     color: "#2196F3",
     display: "flex",
     justifyContent: "space-between",
+    // verticalAlign: 'middle',
     fontSize: "24px",
     lineHeight: "24px",
+    marginBottom: '20px',
+    marginRight: '30px'
+
+
+    // TODO: решить с паддингом
+    // padding: '6px 0px',
+  },
+  price: {
+    display: "flex",
+    alignItems: 'center'
   },
   destination: {
     display: "flex",
@@ -42,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
     // display: flex;
     // align-items: center;
   },
+  thirdColumn: {
+    marginRight: '30px'
+  }
 }));
 
 function TicketCard(props) {
@@ -220,9 +236,6 @@ function TicketCard(props) {
   }
 
 
- if (!props.filteredData.tickets) {
-   return 'Loading...'
- }
 
 
   return (
@@ -232,7 +245,7 @@ function TicketCard(props) {
           {console.log("data: ", props.data)}
           {console.log("filteredData: ", props.filteredData)}
           <Box className={classes.header}>
-            <Box>{price} Р</Box>
+            <Box className={classes.price}>{price} Р</Box>
             <Box>
               <img src={carrierImageUrl} alt="" />
             </Box>
@@ -278,7 +291,7 @@ function TicketCard(props) {
                 {secondSegmentTravelHours}ч {secondSegmentTravelMinutes}м
               </Box>
             </Box>
-            <Box>
+            <Box className={classes.thirdColumn}>
               <Box className={classes.destinationHeading}>
                 {secondSegmentStops}
               </Box>

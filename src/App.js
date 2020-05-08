@@ -10,12 +10,17 @@ import { ReactComponent as Logo } from "./images/plane.svg";
 import "./App.css";
 import Filter from "./components/Filter";
 import Tabs from "./components/Tabs";
-import TicketCard from "./components/TicketCard";
+import TicketsContainer from "./components/TicketsContainer";
 // import { ContextApp, initialState, reducer } from "./reducer.js";
 import { fetchData } from "./actions";
 import { dispatch } from "./index.js";
 
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#2196F3",
+    },
+  },
   overrides: {
     MuiTypography: {
       body1: {
@@ -102,24 +107,12 @@ function App(props) {
           <Filter />
           <Box>
             <Tabs />
-            <TicketCard number={0} />
-            <TicketCard number={1} />
-            <TicketCard number={2} />
-            <TicketCard number={3} />
-            <TicketCard number={4} />
+            <TicketsContainer />
           </Box>
         </Box>
       </Container>
     </ThemeProvider>
-
   );
 }
-
-// const mapStateToProps = ({ data, filteredData }) => {
-//   return {
-//     data,
-//     filteredData
-//   };
-// };
 
 export default connect()(App);

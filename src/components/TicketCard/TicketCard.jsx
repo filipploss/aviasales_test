@@ -81,7 +81,7 @@ function TicketCard(props) {
   let secondSegmentTravelMinutes;
   let secondSegmentStopsNames;
 
-  if (props.filteredData.tickets) {
+  if (props.filteredData.tickets && props.filteredData.tickets.length > 0) {
     //  TODO!!!! Departute and arrival time is made for Moscow
     price = props.filteredData.tickets[props.number].price
       .toString()
@@ -218,9 +218,16 @@ function TicketCard(props) {
         ? props.filteredData.tickets[props.number].segments[1].stops.join(", ")
         : props.filteredData.tickets[props.number].segments[1].stops.join("");
   }
+
+
+ if (!props.filteredData.tickets) {
+   return 'Loading...'
+ }
+
+
   return (
     <>
-      {props.filteredData.tickets ? (
+      {props.filteredData.tickets && props.filteredData.tickets.length > 0 ? (
         <Box className={classes.card}>
           {console.log("data: ", props.data)}
           {console.log("filteredData: ", props.filteredData)}
@@ -282,7 +289,7 @@ function TicketCard(props) {
           </Box>
         </Box>
       ) : (
-        "LOADING"
+        ""
       )}
     </>
   );

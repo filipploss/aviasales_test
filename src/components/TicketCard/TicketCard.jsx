@@ -13,28 +13,35 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Open Sans",
     fontStyle: "normal",
     fontWeight: 600,
-    padding: '20px',
-
+    height: '144px',
+    padding: "20px",
+    marginBottom: '20px',
+    '&:last-child': {
+      marginBottom: '0px'
+    }
   },
   header: {
     color: "#2196F3",
     display: "flex",
     justifyContent: "space-between",
-    // verticalAlign: 'middle',
     fontSize: "24px",
     lineHeight: "24px",
-    marginBottom: '20px',
-    marginRight: '30px'
-
+    marginBottom: "20px",
+    marginRight: "30px",
 
     // TODO: решить с паддингом
     // padding: '6px 0px',
   },
   price: {
     display: "flex",
-    alignItems: 'center'
+    alignItems: "center",
   },
-  destination: {
+  destinationFirst: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: "10px",
+  },
+  destinationSecond: {
     display: "flex",
     justifyContent: "space-between",
   },
@@ -51,13 +58,14 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "14px",
     lineHeight: "21px",
     color: "#4A4A4A",
-    // /* identical to box height, or 150% */
-    // display: flex;
-    // align-items: center;
+  },
+  column: {
+    width: "141px",
+    marginRight: '20px'
   },
   thirdColumn: {
-    marginRight: '30px'
-  }
+    width: "140px",
+  },
 }));
 
 function TicketCard(props) {
@@ -235,9 +243,6 @@ function TicketCard(props) {
         : props.filteredData.tickets[props.number].segments[1].stops.join("");
   }
 
-
-
-
   return (
     <>
       {props.filteredData.tickets && props.filteredData.tickets.length > 0 ? (
@@ -250,8 +255,8 @@ function TicketCard(props) {
               <img src={carrierImageUrl} alt="" />
             </Box>
           </Box>
-          <Box className={classes.destination}>
-            <Box>
+          <Box className={classes.destinationFirst}>
+            <Box className={classes.column}>
               <Box className={classes.destinationHeading}>
                 {firstSegmentOrigin} – {firstSegmentDestination}
               </Box>
@@ -260,13 +265,13 @@ function TicketCard(props) {
                 {firstSegmentArrivalHours}:{firstSegmentArrivalMinutes}
               </Box>
             </Box>
-            <Box>
+            <Box className={classes.column}>
               <Box className={classes.destinationHeading}>В пути</Box>
               <Box className={classes.destinationText}>
                 {firstSegmentTravelHours}ч {firstSegmentTravelMinutes}м
               </Box>
             </Box>
-            <Box>
+            <Box className={classes.thirdColumn}>
               <Box className={classes.destinationHeading}>
                 {firstSegmentStops}
               </Box>
@@ -275,8 +280,8 @@ function TicketCard(props) {
               </Box>
             </Box>
           </Box>
-          <Box className={classes.destination}>
-            <Box>
+          <Box className={classes.destinationSecond}>
+            <Box className={classes.column}>
               <Box className={classes.destinationHeading}>
                 {secondSegmentOrigin} – {secondSegmentDestination}
               </Box>
@@ -285,7 +290,7 @@ function TicketCard(props) {
                 {secondSegmentArrivalHours}:{secondSegmentArrivalMinutes}
               </Box>
             </Box>
-            <Box>
+            <Box className={classes.column}>
               <Box className={classes.destinationHeading}>В пути</Box>
               <Box className={classes.destinationText}>
                 {secondSegmentTravelHours}ч {secondSegmentTravelMinutes}м

@@ -10,7 +10,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 import { filterData } from "../../actions";
 import { dispatch } from "../../index.js";
-import CheckboxTick from "../../images/Shape.svg";
+import CheckboxTick from "../../images/shape.svg";
 
 const useStyles = makeStyles((theme) => ({
   legend: {
@@ -25,17 +25,19 @@ const useStyles = makeStyles((theme) => ({
     margin: "20px",
   },
   filter: {
-    display: "flex",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    fontSize: "13px",
-    color: "#4A4A4A",
     background: "#ffffff",
     boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
     borderRadius: "5px",
+    color: "#4A4A4A",
+    display: "flex",
+    height: "252px",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: "13px",
+    flexShrink: 0,
+    margin: '0 20px 20px 0',
     width: "232px",
-    minHeight: "252px",
-    cursor: 'url("./images/cursor.svg"), auto',
+
   },
   icon: {
     borderRadius: "2px",

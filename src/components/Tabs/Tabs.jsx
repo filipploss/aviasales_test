@@ -13,9 +13,7 @@ const useStyles = makeStyles((theme) => ({
     height: "50px",
     border: "1px solid #DFE5EC",
     borderRadius: "5px",
-    // boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
-    // alignItems: "center",
-    // justifyContent: "center",
+    marginBottom: '20px',
     fontFamily: "Open Sans",
     fontStyle: "normal",
     fontWeight: 600,
@@ -23,24 +21,18 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "20px",
     letterSpacing: "0.5px",
     overflow: "hidden",
-    
-
-    // backgroundColor: '#2196F3',
   },
   tab: {
-    // boxSizing: 'content-box',
-    // cursor: 'url("../../images/cursor.svg"), auto',
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     flexGrow: 1,
-    // flexBasis: '50%',
     height: "100%",
     background: "#FFFFFF",
+    cursor: 'pointer',
   },
 
   selected: {
-    // boxSizing: 'border-box',
     color: "#FFFFFF",
     backgroundColor: "#2196F3",
   },

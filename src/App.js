@@ -11,7 +11,6 @@ import "./App.css";
 import Filter from "./components/Filter";
 import Tabs from "./components/Tabs";
 import TicketsContainer from "./components/TicketsContainer";
-// import { ContextApp, initialState, reducer } from "./reducer.js";
 import { fetchData } from "./actions";
 import { dispatch } from "./index.js";
 
@@ -36,6 +35,11 @@ const theme = createMuiTheme({
 });
 
 const useStyles = makeStyles((theme) => ({
+  widget: {
+    display: "flex",
+    flexWrap: 'wrap'
+  },
+
   logo: {
     display: "flex",
     justifyContent: "center",
@@ -45,10 +49,8 @@ const useStyles = makeStyles((theme) => ({
 
 function App(props) {
   const classes = useStyles();
-  // const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    // let ticketsData;
     console.log("App loaded");
     const fetchSearchId = async () => {
       try {
@@ -56,7 +58,6 @@ function App(props) {
           "https://front-test.beta.aviasales.ru/search"
         );
         let searchId = await response.json();
-        // console.log(searchId.searchId);
         return searchId.searchId;
       } catch (err) {
         alert("Что-то пошло не так :( Перезагрузите страницу"); // TypeError: failed to fetch
@@ -84,11 +85,6 @@ function App(props) {
     fetchSearchId()
       .then((res) => fetchTickets(res))
       .then((res) => {
-        // console.log(props.data)
-        //   console.log('!')
-        //  console.log(res)
-
-        //  console.log(res.tickets.sort((a, b) => a.price > b.price ? 1 : -1))
         dispatch(
           fetchData({
             tickets: res.tickets.sort((a, b) => (a.price > b.price ? 1 : -1)),
@@ -99,11 +95,11 @@ function App(props) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="md">
+      <Container maxWidth="md" >
         <Box className={classes.logo}>
           <Logo />
         </Box>
-        <Box display="flex">
+        <Box className={classes.widget}>
           <Filter />
           <Box>
             <Tabs />

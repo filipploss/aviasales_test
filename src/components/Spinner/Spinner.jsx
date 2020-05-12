@@ -9,11 +9,8 @@ const useStyles = makeStyles((theme) => ({
     "& > * + *": {
       marginLeft: theme.spacing(2),
     },
-    // maxWidth: '503px',
-    // alignItems: 'center',
     justifyContent: 'center',
     margin: '20px'
-    // alignSelf: 'center'
   },
 
 }));

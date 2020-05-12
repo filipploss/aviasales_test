@@ -8,50 +8,49 @@ import { dispatch } from "../../index.js";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: "flex",
-    width: "503px",
-    height: "50px",
-    // border: "1px solid #DFE5EC",
     borderRadius: "5px",
-    marginBottom: "20px",
+    display: "flex",
     fontFamily: "Open Sans",
+    fontSize: "12px",
     fontStyle: "normal",
     fontWeight: 600,
-    fontSize: "12px",
-    lineHeight: "20px",
+    height: "50px",
     letterSpacing: "0.5px",
+    lineHeight: "20px",
+    marginBottom: "20px",
     overflow: "hidden",
+    width: "503px",
   },
   tab: {
-    display: "flex",
-    boxSizing: "border-box",
-    borderRadius: "5px",
     alignItems: "center",
-    justifyContent: "center",
+    background: "#FFFFFF",
+    border: "1px solid #DFE5EC",
+    borderRadius: "5px",
+    boxSizing: "border-box",
+    cursor: "pointer",
+    display: "flex",
     flexGrow: 1,
     height: "100%",
-    background: "#FFFFFF",
-    cursor: "pointer",
-    border: "1px solid #DFE5EC",
+    justifyContent: "center",
   },
   rightTab: {
-    borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
+    borderTopLeftRadius: 0,
   },
   leftTab: {
-    borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
+    borderTopRightRadius: 0,
   },
   selectedTab: {
-    display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    background: "#FFFFFF",
+    backgroundColor: "#2196F3",
+    color: "#FFFFFF",
+    cursor: "pointer",
+    display: "flex",
     flexGrow: 1,
     height: "100%",
-    background: "#FFFFFF",
-    cursor: "pointer",
-    color: "#FFFFFF",
-    backgroundColor: "#2196F3",
+    justifyContent: "center",
   },
 }));
 
@@ -119,9 +118,8 @@ function Tabs(props) {
   );
 }
 
-const mapStateToProps = ({ data, filteredData }) => {
+const mapStateToProps = ({ filteredData }) => {
   return {
-    data,
     filteredData,
   };
 };

@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import Box from "@material-ui/core/Box";
-// import clsx from "clsx";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
-// TODO: по алфавиту свойства
+
 const useStyles = makeStyles((theme) => ({
   card: {
     background: "#FFFFFF",
@@ -23,18 +22,15 @@ const useStyles = makeStyles((theme) => ({
   header: {
     color: "#2196F3",
     display: "flex",
-    justifyContent: "space-between",
     fontSize: "24px",
+    justifyContent: "space-between",
     lineHeight: "24px",
     marginBottom: "20px",
     marginRight: "30px",
-
-    // TODO: решить с паддингом
-    // padding: '6px 0px',
   },
   price: {
-    display: "flex",
     alignItems: "center",
+    display: "flex",
   },
   destinationFirst: {
     display: "flex",
@@ -46,22 +42,20 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   destinationHeading: {
-    fontSize: "12px",
-    lineHeight: "18px",
-    // display: flex;
-    // align-items: center;
-    letterSpacing: "0.5px",
-    textTransform: "uppercase",
     color: "#A0B0B9",
+    fontSize: "12px",
+    letterSpacing: "0.5px",
+    lineHeight: "18px",
+    textTransform: "uppercase",
   },
   destinationText: {
+    color: "#4A4A4A",
     fontSize: "14px",
     lineHeight: "21px",
-    color: "#4A4A4A",
   },
   column: {
+    marginRight: '20px',
     width: "141px",
-    marginRight: '20px'
   },
   thirdColumn: {
     width: "140px",

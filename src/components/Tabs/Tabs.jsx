@@ -11,9 +11,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "503px",
     height: "50px",
-    border: "1px solid #DFE5EC",
+    // border: "1px solid #DFE5EC",
     borderRadius: "5px",
-    marginBottom: '20px',
+    marginBottom: "20px",
     fontFamily: "Open Sans",
     fontStyle: "normal",
     fontWeight: 600,
@@ -24,15 +24,32 @@ const useStyles = makeStyles((theme) => ({
   },
   tab: {
     display: "flex",
+    boxSizing: "border-box",
+    borderRadius: "5px",
     alignItems: "center",
     justifyContent: "center",
     flexGrow: 1,
     height: "100%",
     background: "#FFFFFF",
-    cursor: 'pointer',
+    cursor: "pointer",
+    border: "1px solid #DFE5EC",
   },
-
-  selected: {
+  rightTab: {
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+  },
+  leftTab: {
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  selectedTab: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexGrow: 1,
+    height: "100%",
+    background: "#FFFFFF",
+    cursor: "pointer",
     color: "#FFFFFF",
     backgroundColor: "#2196F3",
   },
@@ -47,7 +64,7 @@ function Tabs(props) {
       {selected === "cheapest" ? (
         <>
           <Box
-            className={clsx(classes.selected, classes.tab)}
+            className={classes.selectedTab}
             onClick={() => {
               setSelected("cheapest");
             }}
@@ -55,7 +72,7 @@ function Tabs(props) {
             САМЫЙ ДЕШЕВЫЙ
           </Box>
           <Box
-            className={classes.tab}
+            className={clsx(classes.tab, classes.rightTab)}
             onClick={() => {
               setSelected("fastest");
               dispatch(
@@ -76,7 +93,7 @@ function Tabs(props) {
       ) : (
         <>
           <Box
-            className={clsx(classes.tab)}
+            className={clsx(classes.tab, classes.leftTab)}
             onClick={() => {
               setSelected("cheapest");
               dispatch(
@@ -91,7 +108,7 @@ function Tabs(props) {
             САМЫЙ ДЕШЕВЫЙ
           </Box>
           <Box
-            className={clsx(classes.selected, classes.tab)}
+            className={classes.selectedTab}
             onClick={() => setSelected("fastest")}
           >
             САМЫЙ БЫСТРЫЙ

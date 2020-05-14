@@ -11,7 +11,7 @@ import "./App.css";
 import Filter from "./components/Filter";
 import Tabs from "./components/Tabs";
 import TicketsContainer from "./components/TicketsContainer";
-import { fetchData } from "./actions";
+import { fetchData, fetchError } from "./actions";
 import { dispatch } from "./index.js";
 
 const theme = createMuiTheme({
@@ -37,7 +37,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   widget: {
     display: "flex",
-    flexWrap: 'wrap'
+    flexWrap: "wrap",
   },
 
   logo: {
@@ -60,9 +60,8 @@ function App(props) {
         let searchId = await response.json();
         return searchId.searchId;
       } catch (err) {
-        alert("Что-то пошло не так :( Перезагрузите страницу"); // TypeError: failed to fetch
+        dispatch(fetchError());
       }
-      // TODO: error обработка
     };
 
     const fetchTickets = async (searchId) => {
@@ -70,32 +69,25 @@ function App(props) {
         let response = await fetch(
           `https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`
         );
-        // TODO: error обработка
-        // TODO: обработать завершение поиска!
-        // console.log(response);
         let ticketsData = await response.json();
-        // console.log(ticketsData);
-        // ticketsData = tickets;
+        dispatch(
+          fetchData({
+            tickets: ticketsData.tickets,
+          })
+        );
+        console.log("ticketsData:", ticketsData);
         return ticketsData;
       } catch (err) {
-        alert("Что-то пошло не так :( Перезагрузите страницу"); // TypeError: failed to fetch
+        dispatch(fetchError());
       }
     };
 
-    fetchSearchId()
-      .then((res) => fetchTickets(res))
-      .then((res) => {
-        dispatch(
-          fetchData({
-            tickets: res.tickets.sort((a, b) => (a.price > b.price ? 1 : -1)),
-          })
-        );
-      });
+    fetchSearchId().then((res) => fetchTickets(res));
   });
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="md" >
+      <Container maxWidth="md">
         <Box className={classes.logo}>
           <Logo />
         </Box>

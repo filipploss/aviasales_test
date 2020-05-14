@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Box from "@material-ui/core/Box";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { fetchData } from "../../actions";
+import { tabSelectCheapest, tabSelectFastest } from "../../actions";
 import { dispatch } from "../../index.js";
 
 const useStyles = makeStyles((theme) => ({
@@ -74,16 +74,7 @@ function Tabs(props) {
             className={clsx(classes.tab, classes.rightTab)}
             onClick={() => {
               setSelected("fastest");
-              dispatch(
-                fetchData({
-                  tickets: props.filteredData.tickets.sort((a, b) =>
-                    a.segments[0].duration + a.segments[1].duration >
-                    b.segments[0].duration + b.segments[1].duration
-                      ? 1
-                      : -1
-                  ),
-                })
-              );
+              dispatch(tabSelectFastest());
             }}
           >
             САМЫЙ БЫСТРЫЙ
@@ -95,20 +86,16 @@ function Tabs(props) {
             className={clsx(classes.tab, classes.leftTab)}
             onClick={() => {
               setSelected("cheapest");
-              dispatch(
-                fetchData({
-                  tickets: props.filteredData.tickets.sort((a, b) =>
-                    a.price > b.price ? 1 : -1
-                  ),
-                })
-              );
+              dispatch(tabSelectCheapest());
             }}
           >
             САМЫЙ ДЕШЕВЫЙ
           </Box>
           <Box
             className={classes.selectedTab}
-            onClick={() => setSelected("fastest")}
+            onClick={() => {
+              setSelected("fastest");
+            }}
           >
             САМЫЙ БЫСТРЫЙ
           </Box>
@@ -118,10 +105,8 @@ function Tabs(props) {
   );
 }
 
-const mapStateToProps = ({ filteredData }) => {
-  return {
-    filteredData,
-  };
+const mapStateToProps = () => {
+  return {};
 };
 
 export default connect(mapStateToProps)(Tabs);

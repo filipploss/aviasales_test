@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import TicketCard from "../TicketCard";
 import Spinner from "../Spinner";
+import ErrorIndicator from '../ErrorIndicator'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -14,6 +15,11 @@ const useStyles = makeStyles((theme) => ({
 
 function TicketsContainer(props) {
   const classes = useStyles();
+
+
+  if (props.error) {
+    return <ErrorIndicator/>;
+  }
 
   if (!props.filteredData.tickets) {
     return <Spinner />;
@@ -30,9 +36,10 @@ function TicketsContainer(props) {
   );
 }
 
-const mapStateToProps = ({ filteredData }) => {
+const mapStateToProps = ({ filteredData, error }) => {
   return {
     filteredData,
+    error
   };
 };
 

@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "normal",
     fontWeight: "normal",
     height: "252px",
-    margin: '0 20px 20px 0',
+    margin: "0 20px 20px 0",
     width: "232px",
   },
   icon: {
@@ -89,55 +89,77 @@ function Filter(props) {
   });
 
   useEffect(() => {
-    if (props.filteredData) {
-      let results = props.data.tickets;
 
-      if (!state.nonStop) {
-        console.log("nonStop unselected");
-        results = results.filter(
-          (item) =>
-            item.segments[0].stops.length !== 0 &&
-            item.segments[1].stops.length !== 0
-        );
-        console.log("results nonstop: ", results);
-      }
-      if (!state.oneStop) {
-        console.log("oneStop unselected");
-        results = results.filter(
-          (item) =>
-            item.segments[0].stops.length !== 1 &&
-            item.segments[1].stops.length !== 1
-        );
-        console.log("results oneStop:", results);
-      }
-      if (!state.twoStops) {
-        console.log("twoStops unselected");
-        results = results.filter(
-          (item) =>
-            item.segments[0].stops.length !== 2 &&
-            item.segments[1].stops.length !== 2
-        );
-        console.log("results twostops: ", results);
-      }
+    // проверить эту проверку, т.к. filtereddata = {}
 
-      if (!state.threeStops) {
-        console.log("threeStops unselected");
-        results = results.filter(
-          (item) =>
-            item.segments[0].stops.length !== 3 &&
-            item.segments[1].stops.length !== 3
-        );
-        console.log("results threestops: ", results);
-      }
+    let tickets;
+    if (props.data.tickets) {
+      if (props.tab === "fastest") {
+        // console.log("props.data in fastest: ", props.data);
 
-      dispatch(
-        filterData({
-          tickets: results,
-        })
-      );
-    
+        tickets = props.data.tickets.sort((a, b) =>
+          a.segments[0].duration + a.segments[1].duration >
+          b.segments[0].duration + b.segments[1].duration
+            ? 1
+            : -1
+        );
+        console.log("tickets in fastest: ", tickets);
+      } else {
+        // console.log('props.data: ', props.data)
+        // console.log("props.data in cheapest: ", props.data);
+        tickets = props.data.tickets.sort((a, b) =>
+          a.price > b.price ? 1 : -1
+        );
+        console.log("tickets in cheapest: ", tickets);
+      }
     }
-  }, [state]);
+    // console.log("props filteredData", props.filteredData);
+    let results = tickets;
+
+    if (!state.nonStop) {
+      console.log("nonStop unselected");
+      results = results.filter(
+        (item) =>
+          item.segments[0].stops.length !== 0 &&
+          item.segments[1].stops.length !== 0
+      );
+      console.log("results nonstop: ", results);
+    }
+    if (!state.oneStop) {
+      console.log("oneStop unselected");
+      results = results.filter(
+        (item) =>
+          item.segments[0].stops.length !== 1 &&
+          item.segments[1].stops.length !== 1
+      );
+      console.log("results oneStop:", results);
+    }
+    if (!state.twoStops) {
+      console.log("twoStops unselected");
+      results = results.filter(
+        (item) =>
+          item.segments[0].stops.length !== 2 &&
+          item.segments[1].stops.length !== 2
+      );
+      console.log("results twostops: ", results);
+    }
+
+    if (!state.threeStops) {
+      console.log("threeStops unselected");
+      results = results.filter(
+        (item) =>
+          item.segments[0].stops.length !== 3 &&
+          item.segments[1].stops.length !== 3
+      );
+      console.log("results threestops: ", results);
+    }
+
+    dispatch(
+      filterData({
+        tickets: results,
+      })
+    );
+  }, [state, props.data, props.tab]);
 
   const handleChange = (event) => {
     if (
@@ -154,43 +176,16 @@ function Filter(props) {
         [event.target.name]: event.target.checked,
       });
       console.log("state.nonStop: ", state.nonStop);
-    }
-
-    // TODO: когда все выделены, выделять ALL
-
-    // else if (
-    //   !state.all &&
-    //   state.nonStop &&
-    //   state.oneStop &&
-    //   state.twoStops &&
-    //   state.threeStops 
-    //   &&
-    //   event.target.name !== "all"
-    // ) {
-    //   setState({
-    //     ...state,
-    //     all: true,
-    //     [event.target.name]: event.target.checked,
-    //   });
-    // }
-
-
-    else if (
+    } else if (
       !state.all &&
       !state.nonStop &&
       !state.oneStop &&
       !state.twoStops &&
       !state.threeStops
-      // &&
-      // (event.target.name !== "all" || event.target.name === "nonStop")
     ) {
-      // console.log(event.target.name);
-      // if (event.target.name === "nonStop" && !state.nonStop) {
-      // console.log('state before: ', state)
       setState({
         ...state,
         all: false,
-        // nonStop: true,
         [event.target.name]: event.target.checked,
       });
       let results;
@@ -247,33 +242,6 @@ function Filter(props) {
         default:
           break;
       }
-
-      // if (event.target.name === "nonStop") {
-      //   results = props.data.tickets.filter(
-      //     (item) =>
-      //       item.segments[0].stops.length === 0 &&
-      //       item.segments[1].stops.length === 0
-      //   );
-      //   dispatch(
-      //     filterData({
-      //       tickets: results,
-      //     })
-      //   );
-      // } else if (event.target.name === "oneStop") {
-      //   results = props.data.tickets.filter(
-      //     (item) =>
-      //       item.segments[0].stops.length === 1 &&
-      //       item.segments[1].stops.length === 1
-      //   );
-      //   dispatch(
-      //     filterData({
-      //       tickets: results,
-      //     })
-      //   );
-      // }
-
-      // console.log("!", results);
-      // console.log('state after: ', state)
     } else if (
       (event.target.name === "nonStop" && state.nonStop) ||
       (event.target.name === "oneStop" && state.oneStop) ||
@@ -282,7 +250,6 @@ function Filter(props) {
     ) {
       setState({
         ...state,
-        // nonStop: false,
         [event.target.name]: event.target.checked,
       });
       let results = props.data.tickets;
@@ -292,19 +259,7 @@ function Filter(props) {
           tickets: results,
         })
       );
-    }
-
-    // }
-
-    // else  {
-    //   dispatch(
-    //     filterData({
-    //       tickets: props.data.tickets,
-    //     })
-    //   );
-    // }
-    // }
-    else {
+    } else {
       setState({ ...state, [event.target.name]: event.target.checked });
     }
   };
@@ -418,10 +373,15 @@ function Filter(props) {
   );
 }
 
-const mapStateToProps = ({ data, filteredData }) => {
+const mapStateToProps = ({
+  data,
+  filteredData,
+  tab,
+}) => {
   return {
     data,
     filteredData,
+    tab,
   };
 };
 

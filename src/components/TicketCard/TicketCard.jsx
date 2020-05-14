@@ -107,7 +107,7 @@ function TicketCard(props) {
     carrierImageUrl = `http://pics.avs.io/110/36/${
       props.filteredData.tickets[props.number].carrier
     }.png`;
-    // console.log("date filteredData: ", props.filteredData.tickets[0].segments[0].date);
+
 
     firstSegmentOrigin =
       props.filteredData.tickets[props.number].segments[0].origin;
@@ -121,7 +121,7 @@ function TicketCard(props) {
     firstSegmentDepartureDateAndTime = new Date(
       props.filteredData.tickets[props.number].segments[0].date
     );
-    // console.log("departureDateAndTime: ", firstSegmentDepartureDateAndTime);
+
     firstSegmentDepartureHours = String(
       firstSegmentDepartureDateAndTime.getHours()
     ).padStart(2, "0");
@@ -130,18 +130,15 @@ function TicketCard(props) {
     ).padStart(2, "0");
 
     firstSegmentdepartureTime = firstSegmentDepartureDateAndTime.getTime();
-    // console.log("departureTime: ", firstSegmentdepartureTime);
-    // console.log("duration: ", props.filteredData.tickets[0].segments[0].duration);
+
     firstSegmentdepartureTimestamp = new Date(
       firstSegmentdepartureTime +
         props.filteredData.tickets[props.number].segments[0].duration * 60000
     );
-    // console.log("timestamp + duration: ", firstSegmentdepartureTimestamp);
-    // console.log(firstSegmentdepartureTimestamp.getHours());
-    // console.log(firstSegmentdepartureTimestamp.getMinutes());
 
+    // Phuket time is +4hours to Moscow
     firstSegmentArrivalHours = String(
-      firstSegmentdepartureTimestamp.getHours()
+      firstSegmentdepartureTimestamp.getHours() + 4
     ).padStart(2, "0");
 
     firstSegmentArrivalMinutes = String(
@@ -189,17 +186,15 @@ function TicketCard(props) {
       secondSegmentDepartureDateAndTime.getMinutes()
     ).padStart(2, "0");
     secondSegmentdepartureTime = secondSegmentDepartureDateAndTime.getTime();
-    // console.log("departureTime: ", secondSegmentdepartureTime);
-    // console.log("duration: ", props.filteredData.tickets[0].segments[1].duration);
+
     secondSegmentdepartureTimestamp = new Date(
       secondSegmentdepartureTime +
         props.filteredData.tickets[props.number].segments[1].duration * 60000
     );
-    // console.log("timestamp + duration: ", secondSegmentdepartureTimestamp);
-    // console.log(secondSegmentdepartureTimestamp.getHours());
-    // console.log(secondSegmentdepartureTimestamp.getMinutes());
+
+     // Phuket time is +4hours to Moscow
     secondSegmentArrivalHours = String(
-      secondSegmentdepartureTimestamp.getHours()
+      secondSegmentdepartureTimestamp.getHours() + 4 
     ).padStart(2, "0");
     secondSegmentArrivalMinutes = String(
       secondSegmentdepartureTimestamp.getMinutes()
@@ -241,8 +236,6 @@ function TicketCard(props) {
     <>
       {props.filteredData.tickets && props.filteredData.tickets.length > 0 ? (
         <Box className={classes.card}>
-          {console.log("data: ", props.data)}
-          {console.log("filteredData: ", props.filteredData)}
           <Box className={classes.header}>
             <Box className={classes.price}>{price} Р</Box>
             <Box>

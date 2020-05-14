@@ -8,7 +8,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import { filterData } from "../../actions";
+import { filterData} from "../../actions";
 import { dispatch } from "../../index.js";
 import CheckboxTick from "../../images/shape.svg";
 
@@ -89,14 +89,9 @@ function Filter(props) {
   });
 
   useEffect(() => {
-
-    // проверить эту проверку, т.к. filtereddata = {}
-
     let tickets;
     if (props.data.tickets) {
       if (props.tab === "fastest") {
-        // console.log("props.data in fastest: ", props.data);
-
         tickets = props.data.tickets.sort((a, b) =>
           a.segments[0].duration + a.segments[1].duration >
           b.segments[0].duration + b.segments[1].duration
@@ -105,15 +100,12 @@ function Filter(props) {
         );
         console.log("tickets in fastest: ", tickets);
       } else {
-        // console.log('props.data: ', props.data)
-        // console.log("props.data in cheapest: ", props.data);
         tickets = props.data.tickets.sort((a, b) =>
           a.price > b.price ? 1 : -1
         );
         console.log("tickets in cheapest: ", tickets);
       }
     }
-    // console.log("props filteredData", props.filteredData);
     let results = tickets;
 
     if (!state.nonStop) {
@@ -175,7 +167,37 @@ function Filter(props) {
         all: false,
         [event.target.name]: event.target.checked,
       });
-      console.log("state.nonStop: ", state.nonStop);
+    } else if (
+      (!state.all &&
+        !state.nonStop &&
+        state.oneStop &&
+        state.twoStops &&
+        state.threeStops &&
+        event.target.name === "nonStop") ||
+      (!state.all &&
+        state.nonStop &&
+        !state.oneStop &&
+        state.twoStops &&
+        state.threeStops &&
+        event.target.name === "oneStop") ||
+      (!state.all &&
+        state.nonStop &&
+        state.oneStop &&
+        !state.twoStops &&
+        state.threeStops &&
+        event.target.name === "twoStops") ||
+      (!state.all &&
+        state.nonStop &&
+        state.oneStop &&
+        state.twoStops &&
+        !state.threeStops &&
+        event.target.name === "threeStops")
+    ) {
+      setState({
+        ...state,
+        all: true,
+        [event.target.name]: event.target.checked,
+      });
     } else if (
       !state.all &&
       !state.nonStop &&
@@ -253,7 +275,6 @@ function Filter(props) {
         [event.target.name]: event.target.checked,
       });
       let results = props.data.tickets;
-      console.log("!", results);
       dispatch(
         filterData({
           tickets: results,
@@ -373,11 +394,7 @@ function Filter(props) {
   );
 }
 
-const mapStateToProps = ({
-  data,
-  filteredData,
-  tab,
-}) => {
+const mapStateToProps = ({ data, filteredData, tab }) => {
   return {
     data,
     filteredData,

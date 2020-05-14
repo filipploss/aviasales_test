@@ -2,13 +2,13 @@ const initialState = {
   data: "",
   error: null,
   filteredData: {},
-  filterState: {
-    all: true,
-    nonStop: true,
-    oneStop: true,
-    twoStops: true,
-    threeStops: true,
-  },
+//   filterState: {
+//     all: true,
+//     nonStop: true,
+//     oneStop: true,
+//     twoStops: true,
+//     threeStops: true,
+//   },
   tab: "cheapest",
 };
 
@@ -36,7 +36,7 @@ const reducer = (state = initialState, action) => {
     //   case "FILTER_STATE":
     //     return {
     //       ...state,
-    //       filterState: action.payload,
+    //     //   filterState: {...state.filterState, [action.payload]: }
     //     };
 
     case "TAB_SELECT_CHEAPEST":

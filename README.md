@@ -1,5 +1,5 @@
 ## Aviasales app (test task). 
-Made with React/Redux and Material UI
+Made using React/Redux, Material UI, Rest API
 
 ###### Available Scripts
 

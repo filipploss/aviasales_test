@@ -265,6 +265,7 @@ function Filter({ data, tab, filterData, loading }) {
 
   const { all, nonStop, oneStop, twoStops, threeStops } = state;
   console.log("Filter loaded");
+  console.log("!");
   return (
     <Box className={classes.filter}>
       <FormControl className={classes.formControl}>

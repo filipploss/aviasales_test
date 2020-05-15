@@ -1,12 +1,6 @@
 ## Aviasales app (test task). 
-Made with React/Redux and Material UI
+Made using React/Redux, Material UI, Rest API
 
-###### Available Scripts
+To start the app you need to run: `npm start` and open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
+Task: https://github.com/KosyanMedia/test-tasks/tree/master/aviasales_frontend

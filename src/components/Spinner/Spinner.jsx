@@ -9,17 +9,16 @@ const useStyles = makeStyles((theme) => ({
     "& > * + *": {
       marginLeft: theme.spacing(2),
     },
-    justifyContent: 'center',
-    margin: '20px'
+    justifyContent: "center",
+    margin: "20px",
   },
-
 }));
 
 function Spinner() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <CircularProgress color='primary'/>
+      <CircularProgress color="primary" />
     </div>
   );
 }

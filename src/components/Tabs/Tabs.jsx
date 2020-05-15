@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Tabs({ dispatchSelectedCheapest, dispatchSelectedFastest }) {
+function Tabs({ selectTab }) {
   const classes = useStyles();
   const [selected, setSelected] = useState("cheapest");
 
@@ -75,7 +75,7 @@ function Tabs({ dispatchSelectedCheapest, dispatchSelectedFastest }) {
             className={clsx(classes.tab, classes.rightTab)}
             onClick={() => {
               setSelected("fastest");
-              dispatchSelectedFastest();
+              selectTab("fastest");
             }}
           >
             САМЫЙ БЫСТРЫЙ
@@ -87,7 +87,7 @@ function Tabs({ dispatchSelectedCheapest, dispatchSelectedFastest }) {
             className={clsx(classes.tab, classes.leftTab)}
             onClick={() => {
               setSelected("cheapest");
-              dispatchSelectedCheapest();
+              selectTab("cheapest");
             }}
           >
             САМЫЙ ДЕШЕВЫЙ
@@ -110,8 +110,7 @@ const mapDispatchToProps = (dispatch) => {
   const { selectTab } = bindActionCreators(actions, dispatch);
 
   return {
-    dispatchSelectedCheapest: () => selectTab("cheapest"),
-    dispatchSelectedFastest: () => selectTab("fastest"),
+    selectTab,
   };
 };
 

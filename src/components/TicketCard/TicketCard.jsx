@@ -3,7 +3,6 @@ import Box from "@material-ui/core/Box";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
-
 const useStyles = makeStyles((theme) => ({
   card: {
     background: "#FFFFFF",
@@ -12,12 +11,12 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Open Sans",
     fontStyle: "normal",
     fontWeight: 600,
-    height: '144px',
+    height: "144px",
     padding: "20px",
-    marginBottom: '20px',
-    '&:last-child': {
-      marginBottom: '0px'
-    }
+    marginBottom: "20px",
+    "&:last-child": {
+      marginBottom: "0px",
+    },
   },
   header: {
     color: "#2196F3",
@@ -54,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "21px",
   },
   column: {
-    marginRight: '20px',
+    marginRight: "20px",
     width: "141px",
   },
   thirdColumn: {
@@ -62,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TicketCard(props) {
+function TicketCard({ number, filteredData }) {
   const classes = useStyles();
 
   useEffect(() => {
@@ -99,26 +98,21 @@ function TicketCard(props) {
   let secondSegmentTravelMinutes;
   let secondSegmentStopsNames;
 
-  if (props.filteredData.tickets && props.filteredData.tickets.length > 0) {
-    price = props.filteredData.tickets[props.number].price
+  if (filteredData.tickets && filteredData.tickets.length > 0) {
+    price = filteredData.tickets[number].price
       .toString()
       .replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, "$1 ");
-    carrierImageUrl = `http://pics.avs.io/110/36/${
-      props.filteredData.tickets[props.number].carrier
-    }.png`;
+    carrierImageUrl = `http://pics.avs.io/110/36/${filteredData.tickets[number].carrier}.png`;
 
-
-    firstSegmentOrigin =
-      props.filteredData.tickets[props.number].segments[0].origin;
+    firstSegmentOrigin = filteredData.tickets[number].segments[0].origin;
     firstSegmentDestination =
-      props.filteredData.tickets[props.number].segments[0].destination;
+      filteredData.tickets[number].segments[0].destination;
 
-    secondSegmentOrigin = 
-      props.filteredData.tickets[props.number].segments[1].origin;
+    secondSegmentOrigin = filteredData.tickets[number].segments[1].origin;
     secondSegmentDestination =
-      props.filteredData.tickets[props.number].segments[1].destination;
+      filteredData.tickets[number].segments[1].destination;
     firstSegmentDepartureDateAndTime = new Date(
-      props.filteredData.tickets[props.number].segments[0].date
+      filteredData.tickets[number].segments[0].date
     );
 
     firstSegmentDepartureHours = String(
@@ -132,7 +126,7 @@ function TicketCard(props) {
 
     firstSegmentdepartureTimestamp = new Date(
       firstSegmentdepartureTime +
-        props.filteredData.tickets[props.number].segments[0].duration * 60000
+        filteredData.tickets[number].segments[0].duration * 60000
     );
 
     // Phuket time is +4hours to Moscow
@@ -145,36 +139,30 @@ function TicketCard(props) {
     ).padStart(2, "0");
 
     firstSegmentTravelHours = String(
-      Math.floor(props.filteredData.tickets[0].segments[0].duration / 60)
+      Math.floor(filteredData.tickets[0].segments[0].duration / 60)
     ).padStart(2, "0");
 
     firstSegmentTravelMinutes = String(
-      props.filteredData.tickets[props.number].segments[0].duration -
-        Math.floor(
-          props.filteredData.tickets[props.number].segments[0].duration / 60
-        ) *
-          60
+      filteredData.tickets[number].segments[0].duration -
+        Math.floor(filteredData.tickets[number].segments[0].duration / 60) * 60
     ).padStart(2, "0");
 
     firstSegmentStops =
-      props.filteredData.tickets[props.number].segments[0].stops.length === 0
+      filteredData.tickets[number].segments[0].stops.length === 0
         ? "БЕЗ ПЕРЕСАДОК"
-        : props.filteredData.tickets[props.number].segments[0].stops.length ===
-          1
+        : filteredData.tickets[number].segments[0].stops.length === 1
         ? "1 ПЕРЕСАДКА"
-        : props.filteredData.tickets[props.number].segments[0].stops.length > 1
-        ? `${
-            props.filteredData.tickets[props.number].segments[0].stops.length
-          } ПЕРЕСАДКИ`
+        : filteredData.tickets[number].segments[0].stops.length > 1
+        ? `${filteredData.tickets[number].segments[0].stops.length} ПЕРЕСАДКИ`
         : "5 ПЕРЕСАДОК";
 
     firstSegmentStopsNames =
-      props.filteredData.tickets[props.number].segments[0].stops.length > 1
-        ? props.filteredData.tickets[props.number].segments[0].stops.join(", ")
-        : props.filteredData.tickets[props.number].segments[0].stops.join("");
+      filteredData.tickets[number].segments[0].stops.length > 1
+        ? filteredData.tickets[number].segments[0].stops.join(", ")
+        : filteredData.tickets[number].segments[0].stops.join("");
 
     secondSegmentDepartureDateAndTime = new Date(
-      props.filteredData.tickets[props.number].segments[1].date
+      filteredData.tickets[number].segments[1].date
     );
 
     secondSegmentDepartureHours = String(
@@ -188,120 +176,107 @@ function TicketCard(props) {
 
     secondSegmentdepartureTimestamp = new Date(
       secondSegmentdepartureTime +
-        props.filteredData.tickets[props.number].segments[1].duration * 60000
+        filteredData.tickets[number].segments[1].duration * 60000
     );
 
-     // Phuket time is +4hours to Moscow
+    // Phuket time is +4hours to Moscow
     secondSegmentArrivalHours = String(
-      secondSegmentdepartureTimestamp.getHours() + 4 
+      secondSegmentdepartureTimestamp.getHours() + 4
     ).padStart(2, "0");
     secondSegmentArrivalMinutes = String(
       secondSegmentdepartureTimestamp.getMinutes()
     ).padStart(2, "0");
 
     secondSegmentTravelHours = String(
-      Math.floor(
-        props.filteredData.tickets[props.number].segments[1].duration / 60
-      )
+      Math.floor(filteredData.tickets[number].segments[1].duration / 60)
     ).padStart(2, "0");
 
     secondSegmentTravelMinutes = String(
-      props.filteredData.tickets[props.number].segments[1].duration -
-        Math.floor(
-          props.filteredData.tickets[props.number].segments[1].duration / 60
-        ) *
-          60
+      filteredData.tickets[number].segments[1].duration -
+        Math.floor(filteredData.tickets[number].segments[1].duration / 60) * 60
     ).padStart(2, "0");
 
     secondSegmentStops =
-      props.filteredData.tickets[props.number].segments[1].stops.length === 0
+      filteredData.tickets[number].segments[1].stops.length === 0
         ? "БЕЗ ПЕРЕСАДОК"
-        : props.filteredData.tickets[props.number].segments[1].stops.length ===
-          1
+        : filteredData.tickets[number].segments[1].stops.length === 1
         ? "1 ПЕРЕСАДКА"
-        : props.filteredData.tickets[props.number].segments[1].stops.length > 1
-        ? `${
-            props.filteredData.tickets[props.number].segments[1].stops.length
-          } ПЕРЕСАДКИ`
+        : filteredData.tickets[number].segments[1].stops.length > 1
+        ? `${filteredData.tickets[number].segments[1].stops.length} ПЕРЕСАДКИ`
         : "5 ПЕРЕСАДОК";
 
     secondSegmentStopsNames =
-      props.filteredData.tickets[props.number].segments[1].stops.length > 1
-        ? props.filteredData.tickets[props.number].segments[1].stops.join(", ")
-        : props.filteredData.tickets[props.number].segments[1].stops.join("");
+      filteredData.tickets[number].segments[1].stops.length > 1
+        ? filteredData.tickets[number].segments[1].stops.join(", ")
+        : filteredData.tickets[number].segments[1].stops.join("");
   }
 
   return (
     <>
-      {props.filteredData.tickets && props.filteredData.tickets.length > 0 ? (
-        <Box className={classes.card}>
-          <Box className={classes.header}>
-            <Box className={classes.price}>{price} Р</Box>
-            <Box>
-              <img src={carrierImageUrl} alt="" />
+      <Box className={classes.card}>
+        <Box className={classes.header}>
+          <Box className={classes.price}>{price} Р</Box>
+          <Box>
+            <img src={carrierImageUrl} alt="" />
+          </Box>
+        </Box>
+        <Box className={classes.destinationFirst}>
+          <Box className={classes.column}>
+            <Box className={classes.destinationHeading}>
+              {firstSegmentOrigin} – {firstSegmentDestination}
+            </Box>
+            <Box className={classes.destinationText}>
+              {firstSegmentDepartureHours}:{firstSegmentdepartureMinutes} –{" "}
+              {firstSegmentArrivalHours}:{firstSegmentArrivalMinutes}
             </Box>
           </Box>
-          <Box className={classes.destinationFirst}>
-            <Box className={classes.column}>
-              <Box className={classes.destinationHeading}>
-                {firstSegmentOrigin} – {firstSegmentDestination}
-              </Box>
-              <Box className={classes.destinationText}>
-                {firstSegmentDepartureHours}:{firstSegmentdepartureMinutes} –{" "}
-                {firstSegmentArrivalHours}:{firstSegmentArrivalMinutes}
-              </Box>
-            </Box>
-            <Box className={classes.column}>
-              <Box className={classes.destinationHeading}>В пути</Box>
-              <Box className={classes.destinationText}>
-                {firstSegmentTravelHours}ч {firstSegmentTravelMinutes}м
-              </Box>
-            </Box>
-            <Box className={classes.thirdColumn}>
-              <Box className={classes.destinationHeading}>
-                {firstSegmentStops}
-              </Box>
-              <Box className={classes.destinationText}>
-                {firstSegmentStopsNames}
-              </Box>
+          <Box className={classes.column}>
+            <Box className={classes.destinationHeading}>В пути</Box>
+            <Box className={classes.destinationText}>
+              {firstSegmentTravelHours}ч {firstSegmentTravelMinutes}м
             </Box>
           </Box>
-          <Box className={classes.destinationSecond}>
-            <Box className={classes.column}>
-              <Box className={classes.destinationHeading}>
-                {secondSegmentOrigin} – {secondSegmentDestination}
-              </Box>
-              <Box className={classes.destinationText}>
-                {secondSegmentDepartureHours}:{secondSegmentDepartureMinutes} –{" "}
-                {secondSegmentArrivalHours}:{secondSegmentArrivalMinutes}
-              </Box>
+          <Box className={classes.thirdColumn}>
+            <Box className={classes.destinationHeading}>
+              {firstSegmentStops}
             </Box>
-            <Box className={classes.column}>
-              <Box className={classes.destinationHeading}>В пути</Box>
-              <Box className={classes.destinationText}>
-                {secondSegmentTravelHours}ч {secondSegmentTravelMinutes}м
-              </Box>
-            </Box>
-            <Box className={classes.thirdColumn}>
-              <Box className={classes.destinationHeading}>
-                {secondSegmentStops}
-              </Box>
-              <Box className={classes.destinationText}>
-                {secondSegmentStopsNames}
-              </Box>
+            <Box className={classes.destinationText}>
+              {firstSegmentStopsNames}
             </Box>
           </Box>
         </Box>
-      ) : (
-        ""
-      )}
+        <Box className={classes.destinationSecond}>
+          <Box className={classes.column}>
+            <Box className={classes.destinationHeading}>
+              {secondSegmentOrigin} – {secondSegmentDestination}
+            </Box>
+            <Box className={classes.destinationText}>
+              {secondSegmentDepartureHours}:{secondSegmentDepartureMinutes} –{" "}
+              {secondSegmentArrivalHours}:{secondSegmentArrivalMinutes}
+            </Box>
+          </Box>
+          <Box className={classes.column}>
+            <Box className={classes.destinationHeading}>В пути</Box>
+            <Box className={classes.destinationText}>
+              {secondSegmentTravelHours}ч {secondSegmentTravelMinutes}м
+            </Box>
+          </Box>
+          <Box className={classes.thirdColumn}>
+            <Box className={classes.destinationHeading}>
+              {secondSegmentStops}
+            </Box>
+            <Box className={classes.destinationText}>
+              {secondSegmentStopsNames}
+            </Box>
+          </Box>
+        </Box>
+      </Box>
     </>
   );
 }
 
-const mapStateToProps = ({ data, filteredData }) => {
+const mapStateToProps = ({ filteredData }) => {
   return {
-    data,
     filteredData,
   };
 };

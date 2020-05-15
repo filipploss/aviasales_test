@@ -3,6 +3,7 @@ const initialState = {
   error: null,
   filteredData: {},
   tab: "cheapest",
+  loading: true
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,11 +14,13 @@ const reducer = (state = initialState, action) => {
         data: action.payload,
         filteredData: action.payload,
         error: null,
+        loading: false
       };
     case "FETCH_DATA_FAILURE":
       return {
         ...state,
         error: true,
+        loading: false
       };
 
     case "FILTER_DATA":

@@ -24,25 +24,17 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         filteredData: action.payload,
-        // error: null,
       };
-    //   case "FILTER_STATE":
-    //     return {
-    //       ...state,
-    //     //   filterState: {...state.filterState, [action.payload]: }
-    //     };
 
     case "SELECT_TAB_CHEAPEST":
       return {
         ...state,
         tab: "cheapest",
-        // error: null,
       };
     case "SELECT_TAB_FASTEST":
       return {
         ...state,
         tab: "fastest",
-        // error: null,
       };
     default:
       return state;

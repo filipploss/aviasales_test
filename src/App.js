@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -11,8 +12,7 @@ import "./App.css";
 import Filter from "./components/Filter";
 import Tabs from "./components/Tabs";
 import TicketsContainer from "./components/TicketsContainer";
-import { fetchData, fetchError } from "./actions";
-import { dispatch } from "./index.js";
+import * as actions from "./actions";
 
 const theme = createMuiTheme({
   palette: {
@@ -47,42 +47,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App() {
+function App({ getData }) {
   const classes = useStyles();
 
   useEffect(() => {
     console.log("App loaded");
-    const fetchSearchId = async () => {
-      try {
-        let response = await fetch(
-          "https://front-test.beta.aviasales.ru/search"
-        );
-        let searchId = await response.json();
-        return searchId.searchId;
-      } catch (err) {
-        dispatch(fetchError());
-      }
-    };
-
-    const fetchTickets = async (searchId) => {
-      try {
-        let response = await fetch(
-          `https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`
-        );
-        let ticketsData = await response.json();
-        dispatch(
-          fetchData({
-            tickets: ticketsData.tickets,
-          })
-        );
-        console.log("ticketsData:", ticketsData);
-        return ticketsData;
-      } catch (err) {
-        dispatch(fetchError());
-      }
-    };
-
-    fetchSearchId().then((res) => fetchTickets(res));
+    getData();
   });
 
   return (
@@ -103,4 +73,11 @@ function App() {
   );
 }
 
-export default connect()(App);
+const mapDispatchToProps = (dispatch) => {
+  const { getData } = bindActionCreators(actions, dispatch);
+  return {
+    getData,
+  };
+};
+
+export default connect(null, mapDispatchToProps)(App);

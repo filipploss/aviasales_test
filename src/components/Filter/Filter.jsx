@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Filter({ data, tab, filterData, loading }) {
+function Filter({ data, tab, filterData, loading, error }) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     all: true,
@@ -90,7 +90,7 @@ function Filter({ data, tab, filterData, loading }) {
 
   useEffect(() => {
     let tickets;
-    if (!loading) {
+    if (!loading && !error) {
       if (tab === "fastest") {
         tickets = data.tickets.sort((a, b) =>
           a.segments[0].duration + a.segments[1].duration >
@@ -123,11 +123,12 @@ function Filter({ data, tab, filterData, loading }) {
       if (!state.threeStops) {
         checkStopsNumber(3);
       }
+
       filterData({
         tickets,
       });
     }
-  }, [state, data, tab, filterData, loading]);
+  }, [state, data, tab, filterData, loading, error]);
 
   const handleChange = (event) => {
     if (
@@ -265,7 +266,6 @@ function Filter({ data, tab, filterData, loading }) {
 
   const { all, nonStop, oneStop, twoStops, threeStops } = state;
   console.log("Filter loaded");
-  console.log("!");
   return (
     <Box className={classes.filter}>
       <FormControl className={classes.formControl}>
@@ -360,12 +360,13 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const mapStateToProps = ({ data, filteredData, tab, loading }) => {
+const mapStateToProps = ({ data, filteredData, tab, loading, error }) => {
   return {
     data,
     filteredData,
     tab,
     loading,
+    error,
   };
 };
 

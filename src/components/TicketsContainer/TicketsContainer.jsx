@@ -26,7 +26,7 @@ function TicketsContainer({ error, loading, filteredData }) {
   }
 
   if (filteredData.tickets.length === 0) {
-    return ''
+    return "";
   }
 
   return (
@@ -43,8 +43,8 @@ function TicketsContainer({ error, loading, filteredData }) {
 const mapStateToProps = ({ error, loading, filteredData }) => {
   return {
     error,
-    loading, filteredData
-
+    loading,
+    filteredData,
   };
 };
 

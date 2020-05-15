@@ -24,16 +24,10 @@ const reducer = (state = initialState, action) => {
       };
 
     case "FILTER_DATA":
-      // if (state.filteredData !== action.payload) {
         return {
           ...state,
           filteredData: action.payload,
         };
-      // } else {
-      //   return {
-      //     ...state,
-      //   };
-      // }
 
     case "SELECT_TAB_CHEAPEST":
       return {

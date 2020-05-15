@@ -1,12 +1,5 @@
 ## Aviasales app (test task). 
 Made using React/Redux, Material UI, Rest API
 
-###### Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To start the app you need to run: `npm start`<br /> and open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 

@@ -3,7 +3,7 @@ const initialState = {
   error: null,
   filteredData: {},
   tab: "cheapest",
-  loading: true
+  loading: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -14,20 +14,26 @@ const reducer = (state = initialState, action) => {
         data: action.payload,
         filteredData: action.payload,
         error: null,
-        loading: false
+        loading: false,
       };
     case "FETCH_DATA_FAILURE":
       return {
         ...state,
         error: true,
-        loading: false
+        loading: false,
       };
 
     case "FILTER_DATA":
-      return {
-        ...state,
-        filteredData: action.payload,
-      };
+      // if (state.filteredData !== action.payload) {
+        return {
+          ...state,
+          filteredData: action.payload,
+        };
+      // } else {
+      //   return {
+      //     ...state,
+      //   };
+      // }
 
     case "SELECT_TAB_CHEAPEST":
       return {

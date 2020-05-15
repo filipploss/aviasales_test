@@ -27,16 +27,14 @@ const getData = () => (dispatch) => {
         `https://front-test.beta.aviasales.ru/tickets?searchId=${searchId}`
       );
       let ticketsData = await response.json();
-      /// ????
-      // console.log('before:', ticketsData)
-      // ticketsData.tickets = ticketsData.tickets.sort((a, b) => (a.price > b.price ? 1 : -1));
-      // console.log('after:', ticketsData)
+      ticketsData.tickets = ticketsData.tickets.sort((a, b) =>
+        a.price > b.price ? 1 : -1
+      );
       dispatch(
         fetchData({
           tickets: ticketsData.tickets,
         })
       );
-      console.log("ticketsData:", ticketsData);
       return ticketsData;
     } catch (err) {
       dispatch(fetchError());

@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Filter({ data, tab, filterData }) {
+function Filter({ data, tab, filterData, loading }) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     all: true,
@@ -90,7 +90,7 @@ function Filter({ data, tab, filterData }) {
 
   useEffect(() => {
     let tickets;
-    if (data.tickets) {
+    if (!loading) {
       if (tab === "fastest") {
         tickets = data.tickets.sort((a, b) =>
           a.segments[0].duration + a.segments[1].duration >
@@ -98,50 +98,36 @@ function Filter({ data, tab, filterData }) {
             ? 1
             : -1
         );
-        console.log("tickets in fastest: ", tickets);
-      } 
-      else {
+      } else {
         tickets = data.tickets.sort((a, b) => (a.price > b.price ? 1 : -1));
-        console.log("tickets in cheapest: ", tickets);
       }
-    }
 
-    // let results = tickets;
+      const checkStopsNumber = (number) => {
+        tickets = tickets.filter(
+          (item) =>
+            item.segments[0].stops.length !== number &&
+            item.segments[1].stops.length !== number
+        );
+      };
 
-    const checkStopsNumber = (number) => {
-      tickets = tickets.filter(
-        (item) =>
-          item.segments[0].stops.length !== number &&
-          item.segments[1].stops.length !== number
-      );
-    };
+      if (!state.nonStop) {
+        checkStopsNumber(0);
+      }
+      if (!state.oneStop) {
+        checkStopsNumber(1);
+      }
+      if (!state.twoStops) {
+        checkStopsNumber(2);
+      }
 
-    if (!state.nonStop) {
-      console.log("nonStop unselected");
-      checkStopsNumber(0);
-      console.log("results nonstop: ", tickets);
+      if (!state.threeStops) {
+        checkStopsNumber(3);
+      }
+      filterData({
+        tickets,
+      });
     }
-    if (!state.oneStop) {
-      console.log("oneStop unselected");
-      checkStopsNumber(1);
-      console.log("results oneStop:", tickets);
-    }
-    if (!state.twoStops) {
-      console.log("twoStops unselected");
-      checkStopsNumber(2);
-      console.log("results twostops: ", tickets);
-    }
-
-    if (!state.threeStops) {
-      console.log("threeStops unselected");
-      checkStopsNumber(3);
-      console.log("results threestops: ", tickets);
-    }
-
-    filterData({
-      tickets,
-    });
-  }, [state, data, tab, filterData]);
+  }, [state, data, tab, filterData, loading]);
 
   const handleChange = (event) => {
     if (
@@ -373,11 +359,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const mapStateToProps = ({ data, filteredData, tab }) => {
+const mapStateToProps = ({ data, filteredData, tab, loading }) => {
   return {
     data,
     filteredData,
     tab,
+    loading,
   };
 };
 

@@ -2,30 +2,23 @@ const initialState = {
   data: "",
   error: null,
   filteredData: {},
-//   filterState: {
-//     all: true,
-//     nonStop: true,
-//     oneStop: true,
-//     twoStops: true,
-//     threeStops: true,
-//   },
   tab: "cheapest",
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "FETCH_DATA":
+    case "FETCH_DATA_SUCCESS":
       return {
         ...state,
         data: action.payload,
         filteredData: action.payload,
         error: null,
       };
-      case "FETCH_ERROR":
-        return {
-          ...state,
-          error: true,
-        };
+    case "FETCH_DATA_FAILURE":
+      return {
+        ...state,
+        error: true,
+      };
 
     case "FILTER_DATA":
       return {
@@ -39,13 +32,13 @@ const reducer = (state = initialState, action) => {
     //     //   filterState: {...state.filterState, [action.payload]: }
     //     };
 
-    case "TAB_SELECT_CHEAPEST":
+    case "SELECT_TAB_CHEAPEST":
       return {
         ...state,
         tab: "cheapest",
         // error: null,
       };
-    case "TAB_SELECT_FASTEST":
+    case "SELECT_TAB_FASTEST":
       return {
         ...state,
         tab: "fastest",

@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App(props) {
+function App() {
   const classes = useStyles();
 
   useEffect(() => {

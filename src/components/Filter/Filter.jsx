@@ -8,7 +8,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import { filterData} from "../../actions";
+import { filterData } from "../../actions";
 import { dispatch } from "../../index.js";
 import CheckboxTick from "../../images/shape.svg";
 
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Filter(props) {
+function Filter({ data, tab }) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     all: true,
@@ -90,9 +90,9 @@ function Filter(props) {
 
   useEffect(() => {
     let tickets;
-    if (props.data.tickets) {
-      if (props.tab === "fastest") {
-        tickets = props.data.tickets.sort((a, b) =>
+    if (data.tickets) {
+      if (tab === "fastest") {
+        tickets = data.tickets.sort((a, b) =>
           a.segments[0].duration + a.segments[1].duration >
           b.segments[0].duration + b.segments[1].duration
             ? 1
@@ -100,49 +100,40 @@ function Filter(props) {
         );
         console.log("tickets in fastest: ", tickets);
       } else {
-        tickets = props.data.tickets.sort((a, b) =>
-          a.price > b.price ? 1 : -1
-        );
+        tickets = data.tickets.sort((a, b) => (a.price > b.price ? 1 : -1));
         console.log("tickets in cheapest: ", tickets);
       }
     }
+
     let results = tickets;
+
+    const checkStopsNumber = (number) => {
+      results = results.filter(
+        (item) =>
+          item.segments[0].stops.length !== number &&
+          item.segments[1].stops.length !== number
+      );
+    };
 
     if (!state.nonStop) {
       console.log("nonStop unselected");
-      results = results.filter(
-        (item) =>
-          item.segments[0].stops.length !== 0 &&
-          item.segments[1].stops.length !== 0
-      );
+      checkStopsNumber(0);
       console.log("results nonstop: ", results);
     }
     if (!state.oneStop) {
       console.log("oneStop unselected");
-      results = results.filter(
-        (item) =>
-          item.segments[0].stops.length !== 1 &&
-          item.segments[1].stops.length !== 1
-      );
+      checkStopsNumber(1);
       console.log("results oneStop:", results);
     }
     if (!state.twoStops) {
       console.log("twoStops unselected");
-      results = results.filter(
-        (item) =>
-          item.segments[0].stops.length !== 2 &&
-          item.segments[1].stops.length !== 2
-      );
+      checkStopsNumber(2);
       console.log("results twostops: ", results);
     }
 
     if (!state.threeStops) {
       console.log("threeStops unselected");
-      results = results.filter(
-        (item) =>
-          item.segments[0].stops.length !== 3 &&
-          item.segments[1].stops.length !== 3
-      );
+      checkStopsNumber(3);
       console.log("results threestops: ", results);
     }
 
@@ -151,7 +142,7 @@ function Filter(props) {
         tickets: results,
       })
     );
-  }, [state, props.data, props.tab]);
+  }, [state, data, tab]);
 
   const handleChange = (event) => {
     if (
@@ -212,13 +203,17 @@ function Filter(props) {
       });
       let results;
 
+      const checkStopsNumber = (number) => {
+        results = data.tickets.filter(
+          (item) =>
+            item.segments[0].stops.length !== number &&
+            item.segments[1].stops.length !== number
+        );
+      };
+
       switch (event.target.name) {
         case "nonStop":
-          results = props.data.tickets.filter(
-            (item) =>
-              item.segments[0].stops.length === 0 &&
-              item.segments[1].stops.length === 0
-          );
+          checkStopsNumber(0);
           dispatch(
             filterData({
               tickets: results,
@@ -226,11 +221,7 @@ function Filter(props) {
           );
           break;
         case "oneStop":
-          results = props.data.tickets.filter(
-            (item) =>
-              item.segments[0].stops.length === 1 &&
-              item.segments[1].stops.length === 1
-          );
+          checkStopsNumber(1);
           dispatch(
             filterData({
               tickets: results,
@@ -238,11 +229,7 @@ function Filter(props) {
           );
           break;
         case "twoStops":
-          results = props.data.tickets.filter(
-            (item) =>
-              item.segments[0].stops.length === 2 &&
-              item.segments[1].stops.length === 2
-          );
+          checkStopsNumber(2);
           dispatch(
             filterData({
               tickets: results,
@@ -250,11 +237,7 @@ function Filter(props) {
           );
           break;
         case "threeStops":
-          results = props.data.tickets.filter(
-            (item) =>
-              item.segments[0].stops.length === 3 &&
-              item.segments[1].stops.length === 3
-          );
+          checkStopsNumber(3);
           dispatch(
             filterData({
               tickets: results,
@@ -274,7 +257,7 @@ function Filter(props) {
         ...state,
         [event.target.name]: event.target.checked,
       });
-      let results = props.data.tickets;
+      let results = data.tickets;
       dispatch(
         filterData({
           tickets: results,

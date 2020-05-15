@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import Box from "@material-ui/core/Box";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { tabSelectCheapest, tabSelectFastest } from "../../actions";
-import { dispatch } from "../../index.js";
+
+import * as actions from "../../actions";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Tabs(props) {
+function Tabs({ dispatchSelectedCheapest, dispatchSelectedFastest }) {
   const classes = useStyles();
   const [selected, setSelected] = useState("cheapest");
 
@@ -74,7 +75,7 @@ function Tabs(props) {
             className={clsx(classes.tab, classes.rightTab)}
             onClick={() => {
               setSelected("fastest");
-              dispatch(tabSelectFastest());
+              dispatchSelectedFastest();
             }}
           >
             САМЫЙ БЫСТРЫЙ
@@ -86,7 +87,7 @@ function Tabs(props) {
             className={clsx(classes.tab, classes.leftTab)}
             onClick={() => {
               setSelected("cheapest");
-              dispatch(tabSelectCheapest());
+              dispatchSelectedCheapest();
             }}
           >
             САМЫЙ ДЕШЕВЫЙ
@@ -105,8 +106,13 @@ function Tabs(props) {
   );
 }
 
-const mapStateToProps = () => {
-  return {};
+const mapDispatchToProps = (dispatch) => {
+  const { selectTab } = bindActionCreators(actions, dispatch);
+
+  return {
+    dispatchSelectedCheapest: () => selectTab("cheapest"),
+    dispatchSelectedFastest: () => selectTab("fastest"),
+  };
 };
 
-export default connect(mapStateToProps)(Tabs);
+export default connect(null, mapDispatchToProps)(Tabs);

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -8,8 +9,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import { filterData } from "../../actions";
-import { dispatch } from "../../index.js";
+import * as actions from "../../actions";
 import CheckboxTick from "../../images/shape.svg";
 
 const useStyles = makeStyles((theme) => ({
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Filter({ data, tab }) {
+function Filter({ data, tab, filterData }) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     all: true,
@@ -105,10 +105,10 @@ function Filter({ data, tab }) {
       }
     }
 
-    let results = tickets;
+    // let results = tickets;
 
     const checkStopsNumber = (number) => {
-      results = results.filter(
+      tickets = tickets.filter(
         (item) =>
           item.segments[0].stops.length !== number &&
           item.segments[1].stops.length !== number
@@ -118,31 +118,29 @@ function Filter({ data, tab }) {
     if (!state.nonStop) {
       console.log("nonStop unselected");
       checkStopsNumber(0);
-      console.log("results nonstop: ", results);
+      console.log("results nonstop: ", tickets);
     }
     if (!state.oneStop) {
       console.log("oneStop unselected");
       checkStopsNumber(1);
-      console.log("results oneStop:", results);
+      console.log("results oneStop:", tickets);
     }
     if (!state.twoStops) {
       console.log("twoStops unselected");
       checkStopsNumber(2);
-      console.log("results twostops: ", results);
+      console.log("results twostops: ", tickets);
     }
 
     if (!state.threeStops) {
       console.log("threeStops unselected");
       checkStopsNumber(3);
-      console.log("results threestops: ", results);
+      console.log("results threestops: ", tickets);
     }
 
-    dispatch(
-      filterData({
-        tickets: results,
-      })
-    );
-  }, [state, data, tab]);
+    filterData({
+      tickets,
+    });
+  }, [state, data, tab, filterData]);
 
   const handleChange = (event) => {
     if (
@@ -201,10 +199,10 @@ function Filter({ data, tab }) {
         all: false,
         [event.target.name]: event.target.checked,
       });
-      let results;
+      let tickets;
 
       const checkStopsNumber = (number) => {
-        results = data.tickets.filter(
+        tickets = data.tickets.filter(
           (item) =>
             item.segments[0].stops.length !== number &&
             item.segments[1].stops.length !== number
@@ -214,35 +212,27 @@ function Filter({ data, tab }) {
       switch (event.target.name) {
         case "nonStop":
           checkStopsNumber(0);
-          dispatch(
-            filterData({
-              tickets: results,
-            })
-          );
+          filterData({
+            tickets,
+          });
           break;
         case "oneStop":
           checkStopsNumber(1);
-          dispatch(
-            filterData({
-              tickets: results,
-            })
-          );
+          filterData({
+            tickets,
+          });
           break;
         case "twoStops":
           checkStopsNumber(2);
-          dispatch(
-            filterData({
-              tickets: results,
-            })
-          );
+          filterData({
+            tickets,
+          });
           break;
         case "threeStops":
           checkStopsNumber(3);
-          dispatch(
-            filterData({
-              tickets: results,
-            })
-          );
+          filterData({
+            tickets,
+          });
           break;
         default:
           break;
@@ -257,12 +247,10 @@ function Filter({ data, tab }) {
         ...state,
         [event.target.name]: event.target.checked,
       });
-      let results = data.tickets;
-      dispatch(
-        filterData({
-          tickets: results,
-        })
-      );
+      let tickets = data.tickets;
+      filterData({
+        tickets,
+      });
     } else {
       setState({ ...state, [event.target.name]: event.target.checked });
     }
@@ -377,6 +365,13 @@ function Filter({ data, tab }) {
   );
 }
 
+const mapDispatchToProps = (dispatch) => {
+  const { filterData } = bindActionCreators(actions, dispatch);
+  return {
+    filterData,
+  };
+};
+
 const mapStateToProps = ({ data, filteredData, tab }) => {
   return {
     data,
@@ -385,4 +380,4 @@ const mapStateToProps = ({ data, filteredData, tab }) => {
   };
 };
 
-export default connect(mapStateToProps)(Filter);
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);

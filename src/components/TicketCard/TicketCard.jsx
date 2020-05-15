@@ -100,7 +100,6 @@ function TicketCard(props) {
   let secondSegmentStopsNames;
 
   if (props.filteredData.tickets && props.filteredData.tickets.length > 0) {
-    //  TODO!!!! Departute and arrival time is made for Moscow
     price = props.filteredData.tickets[props.number].price
       .toString()
       .replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, "$1 ");
@@ -114,7 +113,7 @@ function TicketCard(props) {
     firstSegmentDestination =
       props.filteredData.tickets[props.number].segments[0].destination;
 
-    secondSegmentOrigin =
+    secondSegmentOrigin = 
       props.filteredData.tickets[props.number].segments[1].origin;
     secondSegmentDestination =
       props.filteredData.tickets[props.number].segments[1].destination;

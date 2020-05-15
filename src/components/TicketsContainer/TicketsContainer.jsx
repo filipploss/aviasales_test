@@ -13,17 +13,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TicketsContainer({ filteredData, error, loading }) {
+function TicketsContainer({ error, loading }) {
   const classes = useStyles();
 
   if (error) {
     return <ErrorIndicator />;
   }
 
+  console.log("TicketContainer loaded");
   if (loading) {
     return <Spinner />;
   }
-  console.log("TicketContainer loaded");
   return (
     <Box className={classes.container}>
       <TicketCard number={0} />
@@ -35,9 +35,8 @@ function TicketsContainer({ filteredData, error, loading }) {
   );
 }
 
-const mapStateToProps = ({ filteredData, error, loading }) => {
+const mapStateToProps = ({ error, loading }) => {
   return {
-    filteredData,
     error,
     loading,
   };

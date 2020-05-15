@@ -99,7 +99,8 @@ function Filter({ data, tab, filterData }) {
             : -1
         );
         console.log("tickets in fastest: ", tickets);
-      } else {
+      } 
+      else {
         tickets = data.tickets.sort((a, b) => (a.price > b.price ? 1 : -1));
         console.log("tickets in cheapest: ", tickets);
       }

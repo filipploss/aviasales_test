@@ -20,7 +20,6 @@ function TicketsContainer({ error, loading, filteredData }) {
     return <ErrorIndicator />;
   }
 
-  console.log("TicketContainer loaded");
   if (loading) {
     return <Spinner />;
   }

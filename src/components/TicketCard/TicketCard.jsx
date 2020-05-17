@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Box from "@material-ui/core/Box";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
@@ -63,10 +63,6 @@ const useStyles = makeStyles((theme) => ({
 
 function TicketCard({ number, filteredData }) {
   const classes = useStyles();
-
-  useEffect(() => {
-    console.log("TicketCard loaded");
-  });
 
   let price;
   let carrierImageUrl;

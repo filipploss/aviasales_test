@@ -123,7 +123,6 @@ function Filter({ data, tab, filterData, loading, error }) {
       if (!state.threeStops) {
         checkStopsNumber(3);
       }
-
       filterData({
         tickets,
       });
@@ -265,7 +264,6 @@ function Filter({ data, tab, filterData, loading, error }) {
   };
 
   const { all, nonStop, oneStop, twoStops, threeStops } = state;
-  console.log("Filter loaded");
   return (
     <Box className={classes.filter}>
       <FormControl className={classes.formControl}>

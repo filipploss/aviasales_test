@@ -51,7 +51,6 @@ function App({ getData }) {
   const classes = useStyles();
 
   useEffect(() => {
-    console.log("App loaded");
     getData();
   });
 

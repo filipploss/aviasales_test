@@ -10,7 +10,6 @@ const selectTab = (tab) => {
 };
 
 const getData = () => (dispatch) => {
-  console.log("getData");
   const getSearchId = async () => {
     try {
       let response = await fetch("https://front-test.beta.aviasales.ru/search");
